@@ -1,8 +1,10 @@
-import java.util.Scanner;
+import java.util.*;
 
 class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        // start coding here
+        var guests = new Scanner(System.in).tokens().toArray();
+        var list = Arrays.asList(guests);
+        Collections.reverse(list);
+        list.forEach(System.out::println);
     }
 }
