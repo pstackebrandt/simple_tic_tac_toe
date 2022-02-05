@@ -260,6 +260,9 @@ files:
         }
     }
   learner_created: false
+- name: src/tictactoe/Game.java
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/48/stages/256/implement#comment
 status: Unchecked
 record: -1
