@@ -1,13 +1,19 @@
 package tictactoe;
 
+/**
+ * Tic tac toe game.
+ * Rows and colums will be used dynamically to allow a game with different playground dimensions.
+ */
 public class Game {
     int playGroundRows = 3;
     int playGroundColumns = 3;
 
-    private char[][] gameState = new char[3][3];
+    private char[][] gameState;
+    final private PlayGround playGround;
 
     public Game(String state) {
         this.gameState = Game.getGameState(state);
+        this.playGround = new PlayGround(gameState);
     }
 
     public static char[][] getGameState(String state) {
@@ -58,5 +64,9 @@ public class Game {
 
     public void printGameState() {
         System.out.println(stateToString(this.gameState));
+    }
+
+    public void printPlayGround() {
+        playGround.printPlayGround();
     }
 }
