@@ -1,5 +1,7 @@
 package tictactoe.gamestate;
 
+import tictactoe.Game;
+
 import java.util.ArrayList;
 
 /**
@@ -7,15 +9,15 @@ import java.util.ArrayList;
  */
 public class GameState implements IGameResult {
 
-    public GameState(String state, int cellsCount) {
-        this.state = state;
+    public GameState(String stateLine, int cellsCount) {
+        this.stateLine = stateLine;
         this.cellsCount = cellsCount;
     }
 
     /**
      * Describes each cell of the play ground. Contains not formatting.
      */
-    private final String state;
+    private final String stateLine;
     private final int cellsCount;
 
     public GameStateCategory category = GameStateCategory.Unknown;
@@ -25,7 +27,11 @@ public class GameState implements IGameResult {
         return cellsCount;
     }
 
-    public String getState() {
-        return state;
+    public String getGameStateLine() {
+        return stateLine;
+    }
+
+    public char[][] getGameStateSquare() {
+        return Game.getGameStateSquare(this.stateLine, getCellsCount());
     }
 }

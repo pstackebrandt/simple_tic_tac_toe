@@ -2,7 +2,6 @@ package tictactoe;
 
 import tictactoe.gamestate.GameState;
 import tictactoe.gamestate.GameStateCategory;
-import tictactoe.gamestate.GameStateError;
 
 /**
  * Tic tac toe game.
@@ -13,32 +12,41 @@ public class Game {
     final int playGroundRows = 3;
     final int playGroundColumns = 3;
 
-    private final char[][] gameState;
     final private PlayGround playGround;
 
     final static char[] ValidStateChars = {'O', 'X', '_'}; // todo decide which const to use
     final static String ValidStateCharsString = "OX_";  // todo decide which const to use, rename
+    private final GameState gameState;
 
     /**
-     * @param state Describes the game state. Example: "O_OXXO_XX"
+     * @param gameStateLine Describes the game state. Example: "O_OXXO_XX"
      */
-    public Game(String state) {
-        this.gameState = getGameState(state, playGroundRows * playGroundColumns);
-        this.playGround = new PlayGround(gameState);
+    public Game(String gameStateLine) {
+        this.gameState = new GameState(
+                cleanGameStateLine(gameStateLine),
+                getCellsCount());
+
+        this.playGround = new PlayGround(this.gameState.getGameStateSquare());
     }
 
     /**
-     * Get valid game state.
+     * Get count of all cells of this game.
+     * @return cells count
+     */
+    private int getCellsCount() {
+        return playGroundRows * playGroundColumns;
+    }
+
+    /**
+     * Get game state as a 2 dimensional representation.
      *
      * @param state may be invalid.
      * @return game state
      */
-    // better CreateGameState ??
-    public char[][] getGameState(String state, int fieldCount) {
-        state = prepareState(state);
+    public static char[][] getGameStateSquare(String state, int fieldCount) {
         var resultState = new char[3][3];
 
-        boolean stateValid = Game.isValidGameState(state, fieldCount);
+        boolean stateValid = Game.isStateLineRepresentableAsSquare(state, fieldCount);
 
         if (!stateValid) {
             throw new IllegalArgumentException(String.format("Game state '%s' is invalid.", state));
@@ -62,7 +70,7 @@ public class Game {
      * @param state      to be checked.
      * @param fieldCount is expected count of fields of the play ground.
      */
-    protected static boolean isValidGameState(String state, int fieldCount) {
+    protected static boolean isStateLineRepresentableAsSquare(String state, int fieldCount) {
         if (state == null) return false;
         if (state.length() != fieldCount) return false;   // must contain 9 valid chars for a 3x3 play field
 
@@ -88,13 +96,12 @@ public class Game {
     }
 
     /**
-     * Prepare state for validity check.
+     * Prepare state line for validity check.
      *
-     * @param state
      * @return state which contains supported characters in uppercase only
      */
-    protected static String prepareState(final String state) {
-        return state.trim()
+    protected static String cleanGameStateLine(final String stateLine) {
+        return stateLine.trim()
                 .toUpperCase();
     }
 
@@ -110,8 +117,8 @@ public class Game {
         return result.toString();
     }
 
-    public void printGameState() {
-        System.out.println(stateToString(this.gameState));
+    public void printGameStateSquare() {
+        System.out.println(this.gameState.getGameStateLine());
     }
 
     public void printPlayGround() {
