@@ -2,6 +2,12 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="17">
+      <module name="simple_tic_tac_toe.Simple_Tic-Tac-Toe-task-build-classes-java.main" target="11" />
+      <module name="simple_tic_tac_toe.Simple_Tic-Tac-Toe-task-build-generated-sources-annotationProcessor-java.main" target="11" />
+      <module name="simple_tic_tac_toe.Simple_Tic-Tac-Toe-task-build-generated-sources-headers-java.main" target="11" />
+      <module name="simple_tic_tac_toe.Simple_Tic-Tac-Toe-task-build-reports-tests.main" target="11" />
+      <module name="simple_tic_tac_toe.Simple_Tic-Tac-Toe-task-build-test-results.main" target="11" />
+      <module name="simple_tic_tac_toe.Simple_Tic-Tac-Toe-task-build-tmp.main" target="11" />
       <module name="simple_tic_tac_toe.Simple_Tic-Tac-Toe-task.main" target="11" />
       <module name="simple_tic_tac_toe.Topics-Integer_types_and_operations-Arithmetic_expression.main" target="11" />
       <module name="simple_tic_tac_toe.Topics-Integer_types_and_operations-Difference_of_times.main" target="11" />

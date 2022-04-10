@@ -3,7 +3,7 @@ hyperskill_project:
   ide_files: https://stepik.org/media/attachments/lesson/209897/additional_files.json
   is_template_based: false
   use_ide: true
-update_date: Tue, 08 Feb 2022 13:29:41 UTC
+update_date: Sat, 09 Apr 2022 18:48:43 UTC
 stages:
 - id: 255
   step: 5397
@@ -34,22 +34,22 @@ topics:
     theory_id: 3749
   - title: Types and variables
     theory_id: 3518
-  - title: Sizes and ranges
-    theory_id: 3532
-  - title: Type casting
-    theory_id: 3510
   - title: Comments
     theory_id: 3520
+  - title: Scanning the input
+    theory_id: 9055
   - title: Coding style conventions
     theory_id: 12411
   - title: Naming variables
     theory_id: 3513
-  - title: Scanning the input
-    theory_id: 9055
   - title: Arithmetic operations
     theory_id: 3519
   - title: Integer types and operations
     theory_id: 3565
+  - title: Sizes and ranges
+    theory_id: 3532
+  - title: Type casting
+    theory_id: 3510
   1:
   - title: Increment and decrement
     theory_id: 5008
@@ -57,12 +57,12 @@ topics:
     theory_id: 3514
   - title: Calling a method
     theory_id: 10973
+  - title: String
+    theory_id: 3523
   - title: Primitive and reference types
     theory_id: 5035
   - title: Array
     theory_id: 3511
-  - title: String
-    theory_id: 3523
   2:
   - title: IDE
     theory_id: 10996
@@ -74,10 +74,10 @@ topics:
     theory_id: 3503
   - title: Ternary operator
     theory_id: 3506
-  - title: The for-loop
-    theory_id: 3505
   - title: The while and do-while loops
     theory_id: 3498
+  - title: The for-loop
+    theory_id: 3505
   - title: Branching statements
     theory_id: 3507
   - title: Iterating over arrays

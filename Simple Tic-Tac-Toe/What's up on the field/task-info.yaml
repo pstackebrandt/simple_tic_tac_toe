@@ -319,6 +319,204 @@ files:
         }
     }
   learner_created: false
-feedback_link: https://hyperskill.org/projects/48/stages/257/implement#comment
-status: Unchecked
+- name: src/tictactoe/Game.java
+  visible: true
+  text: |
+    package tictactoe;
+
+    /**
+     * Tic tac toe game.
+     * Rows and colums will be used dynamically to allow a game with different playground dimensions.
+     */
+    public class Game {
+        int playGroundRows = 3;
+        int playGroundColumns = 3;
+
+        private char[][] gameState;
+        final private PlayGround playGround;
+
+        public Game(String state) {
+            this.gameState = Game.getGameState(state);
+            this.playGround = new PlayGround(gameState);
+        }
+
+        public static char[][] getGameState(String state) {
+            state = cleanState(state);
+            var resultState = new char[3][3];
+
+            boolean stateValid = Game.isValidGameState(state);
+
+            if (!stateValid) {
+                throw new IllegalArgumentException(String.format("Game state '%s' is invalid.", state));
+            }
+
+            var stateChars = state.toCharArray();
+
+            for (int row = 0; row < 3; row++) {
+                for (int col = 0; col < 3; col++) {
+                    resultState[row][col] = stateChars[row * 3 + col];
+                }
+            }
+
+            return resultState;
+        }
+
+        protected static boolean isValidGameState(String state) {
+            // todo check content
+            // must contain only _ O (letter) X
+            // must contain 9 chars
+
+            return true;
+        }
+
+        protected static String cleanState(String state) {
+            return state.trim()
+                    .toUpperCase();
+        }
+
+        public String stateToString(char[][] state) {
+            var result = new StringBuilder();
+
+            for (int row = 0; row < playGroundRows; row++) {
+                for (int col = 0; col < playGroundColumns; col++) {
+                    result.append(state[row][col]);
+                }
+            }
+
+            return result.toString();
+        }
+
+        public void printGameState() {
+            System.out.println(stateToString(this.gameState));
+        }
+
+        public void printPlayGround() {
+            playGround.printPlayGround();
+        }
+    }
+  learner_created: true
+- name: src/tictactoe/PlayGround.java
+  visible: true
+  text: |
+    package tictactoe;
+
+    public class PlayGround {
+        final char playerXIcon = 'X';
+        final char playerOIcon = 'O';
+        final char emptyFieldIcon = '_';
+        final char horizontalBorderIcon = '-';
+        final char verticalBorderIcon = '|';
+        final char fieldSeparatorIcon = ' ';
+        final char borderSeparatorIcon = fieldSeparatorIcon;
+
+        /**
+         * Count of characters required in each line for border. Includes spaces.
+         */
+        final int countOfDecorativeCharsAtVerticalBorders = 4;
+
+        private char[][] gameState;
+
+        public PlayGround(char[][] gameState) {
+            this.gameState = gameState;
+        }
+
+        public void updateGameState(char[][] gameState) {
+            this.gameState = gameState;
+        }
+
+        public void printPlayGround() {
+            System.out.println(getPlayGround());
+        }
+
+        public String getPlayGround() {
+            var result = new StringBuilder();
+
+            result.append(getHorizontalBorderIcon())
+                    .append(System.lineSeparator());
+
+            for (int row = 0; row < getRowsCount(); row++) {
+                result.append("" + verticalBorderIcon + borderSeparatorIcon);
+                for (int col = 0; col < getColsCount(); col++) {
+
+                    // append space as delimiter between field icons
+                    if (col != 0) {
+                        result.append(fieldSeparatorIcon);
+                    }
+
+                    result.append(gameState[row][col]);
+                }
+                result.append("" + borderSeparatorIcon + verticalBorderIcon)
+                        .append(System.lineSeparator());
+            }
+
+            result.append(getHorizontalBorderIcon());
+
+            return result.toString();
+        }
+
+        private String getHorizontalBorderIcon() {
+            return ("" + horizontalBorderIcon).repeat(getHorizontalBorderLength());
+        }
+
+        /**
+         * A game with 3 horizontal fields requires 9 characters incl. decorative chars.
+         * ---------, 4 f: 11
+         */
+        protected int getHorizontalBorderLength() {
+            return countOfDecorativeCharsAtVerticalBorders + 2 * getColsCount() - 1;
+        }
+
+        /**
+         * Count of game columns.
+         */
+        public int getColsCount() {
+            return gameState != null && gameState[0] != null
+                    ? gameState[0].length
+                    : 0;
+        }
+
+        /**
+         * Count of game rows.
+         */
+        public int getRowsCount() {
+            return gameState != null ? gameState.length : 0;
+        }
+    }
+  learner_created: true
+- name: src/tictactoe/gamestate/GameState.java
+  visible: true
+  learner_created: true
+- name: src/tictactoe/gamestate/GameStateCategory.java
+  visible: true
+  learner_created: true
+- name: src/tictactoe/gamestate/GameStateError.java
+  visible: true
+  learner_created: true
+- name: src/tictactoe/gamestate/GameStateErrorType.java
+  visible: true
+  learner_created: true
+- name: src/tictactoe/gamestate/IGameResult.java
+  visible: true
+  learner_created: true
+feedback_link: https://hyperskill.org/learn/step/5399#comment
+status: Failed
+feedback:
+  message: |-
+    Wrong answer in test #3
+
+    The result is incorrect. Should be: &quot;O wins&quot;, found: &quot;X wins&quot;. Check if your program works correctly in test examples in description.
+
+    Please find below the output of your program during this failed test.
+    Note that the &#39;&gt;&#39; character indicates the beginning of the input line.
+
+    ---
+
+    &gt; XOOOXOXXO
+    ---------
+    | X O O |
+    | O X O |
+    | X X O |
+    ---------
+    X wins
+  time: Sun, 10 Apr 2022 18:08:27 UTC
 record: -1

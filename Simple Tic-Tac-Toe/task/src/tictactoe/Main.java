@@ -13,6 +13,7 @@ public class Main {
         var game = new Game(stateInput);
         //game.printGameState();
         game.printPlayGround();
+        game.printGameResult();
     }
 }
 

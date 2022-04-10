@@ -1,5 +1,9 @@
 package tictactoe;
 
+/**
+ * PlayGround creates a visual representation of the play ground.
+ * It can print the play ground.
+ */
 public class PlayGround {
     final char playerXIcon = 'X';
     final char playerOIcon = 'O';
@@ -16,19 +20,34 @@ public class PlayGround {
 
     private char[][] gameState;
 
+    /**
+     * Constructor, save game state.
+     * @param gameState
+     */
     public PlayGround(char[][] gameState) {
         this.gameState = gameState;
     }
 
+    /**
+     * Update game state of play ground.
+     * @param gameState
+     */
     public void updateGameState(char[][] gameState) {
         this.gameState = gameState;
     }
 
+    /**
+     * Print play ground of current state.
+     */
     public void printPlayGround() {
         System.out.println(getPlayGround());
     }
 
-    public String getPlayGround() {
+    /**
+     * Get formatted play ground.
+     * @return formatted play ground, includes line separators
+     */
+    private String getPlayGround() {
         var result = new StringBuilder();
 
         result.append(getHorizontalBorderIcon())
