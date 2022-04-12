@@ -5,8 +5,6 @@ options:
 - text: scanner.nextString()
 - text: scanner.nextWord()
 - text: scanner.next()
-message_correct: Congratulations!
-message_incorrect: Incorrect solution
 files:
 - name: src/Task.java
   visible: true

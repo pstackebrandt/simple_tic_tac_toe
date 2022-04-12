@@ -498,6 +498,18 @@ files:
 - name: src/tictactoe/gamestate/IGameResult.java
   visible: true
   learner_created: true
+- name: src/tictactoe/Player.java
+  visible: true
+  learner_created: true
+- name: src/tictactoe/gamestate/IGameStateError.java
+  visible: true
+  learner_created: true
+- name: src/tictactoe/gamestate/GameResult.java
+  visible: true
+  learner_created: true
+- name: src/tictactoe/gamestate/GameResultAbstract.java
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/learn/step/5399#comment
 status: Failed
 feedback:
@@ -518,5 +530,5 @@ feedback:
     | X X O |
     ---------
     X wins
-  time: Sun, 10 Apr 2022 18:08:27 UTC
+  time: Tue, 12 Apr 2022 18:31:43 UTC
 record: -1

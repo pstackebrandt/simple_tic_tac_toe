@@ -5,8 +5,6 @@ options:
 - text: (1) == operator, (2) equals( ) method
 - text: (1) == operator, (2) compare( ) method
 - text: (1) equals( ) method, (2) === operator
-message_correct: Congratulations!
-message_incorrect: Incorrect solution
 files:
 - name: src/Task.java
   visible: true

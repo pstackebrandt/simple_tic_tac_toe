@@ -5,8 +5,6 @@ options:
 - text: It is a command that starts reading data from a file.
 - text: It is an input integer value.
 - text: It is a standard keyword.
-message_correct: Congratulations!
-message_incorrect: Incorrect solution
 files:
 - name: src/Task.java
   visible: true
