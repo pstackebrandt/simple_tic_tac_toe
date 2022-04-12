@@ -1,7 +1,11 @@
 package tictactoe;
 
+import tictactoe.gamestate.GameResult;
 import tictactoe.gamestate.GameState;
 import tictactoe.gamestate.GameStateCategory;
+import tictactoe.gamestate.IGameResult;
+
+import java.util.Optional;
 
 /**
  * Tic tac toe game.
@@ -30,7 +34,16 @@ public class Game {
     }
 
     /**
+     * Manage the game.
+     */
+    public void run() {
+
+    }
+
+
+    /**
      * Get count of all cells of this game.
+     *
      * @return cells count
      */
     private int getCellsCount() {
@@ -126,6 +139,51 @@ public class Game {
     }
 
     public void printGameResult() {
+        IGameResult gameResult = getGameResult(this.gameState);
+
         System.out.println("X wins");
+    }
+
+    private IGameResult getGameResult(final GameState gameState) {
+
+        Optional<IGameResult> result;
+        // checkCountOfCells // todo later?
+
+        result = validatePlayerCellsCount();
+        if (result.isPresent()) return result.get();
+
+
+        int xLines = CountPlayerLines(Player.X, gameState.getGameStateLine());
+        int oLines = CountPlayerLines(Player.O, gameState.getGameStateLine());
+        // checkWinValidity
+        // getWinState //x, o, draw, GameNotFinished
+
+        return gameState;
+    }
+
+    /**
+     * Checks whether cells of each player have correct count.
+     *
+     * @return Optional.Empty: no error in relation to cells found, GameResult: Cell count is wrong.
+     * ({@link GameStateCategory} is additionally set to GameStateCategory.Impossible.)
+     */
+    private Optional<IGameResult> validatePlayerCellsCount() {
+        int playerXCellCount = checkCountOfPlayerCells(Player.X);
+        int playerOCellCount = checkCountOfPlayerCells(Player.O);
+
+        // Wrong player cells difference
+        if (Math.abs(playerXCellCount - playerOCellCount) > 2) {
+            return Optional.of(new GameResult(GameStateCategory.Impossible));
+        }
+        return Optional.empty();
+    }
+
+    private int CountPlayerLines(Player x, String gameStateLine) {
+        //int count = StringUtils.countMatches("elephant", "e");
+        return 0;
+    }
+
+    private int checkCountOfPlayerCells(Player x) {
+        return 0;
     }
 }

@@ -3,6 +3,9 @@ package tictactoe.gamestate;
 import java.util.ArrayList;
 
 public interface IGameResult {
-    GameStateCategory category = GameStateCategory.Unknown;
-    ArrayList<GameStateError> errors = new ArrayList<>();
+    GameStateCategory getGameStateCategory();
+    void SetGameStateCategory(GameStateCategory category);
+    ArrayList<GameStateError> GetErrors();
+    void AddError(GameStateError error);
 }
+
