@@ -9,4 +9,9 @@ public class GameResult extends GameResultAbstract {
     public GameResult(GameStateCategory category){
         this.category = category;
     }
+
+    public GameResult(GameStateCategory category, IGameStateError error){
+        this.category = category;
+        this.errors.add(error);
+    }
 }

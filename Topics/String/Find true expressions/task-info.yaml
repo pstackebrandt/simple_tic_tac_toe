@@ -1,10 +1,10 @@
 type: choice
 is_multiple_choice: true
 options:
-- text: str1.equals(str3)
-- text: str2.equalsIgnoreCase(str3)
 - text: str1 == str2
+- text: str2.equalsIgnoreCase(str3)
 - text: str1.equals(str2)
+- text: str1.equals(str3)
 files:
 - name: src/Task.java
   visible: true

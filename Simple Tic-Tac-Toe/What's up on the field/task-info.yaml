@@ -483,9 +483,6 @@ files:
         }
     }
   learner_created: true
-- name: src/tictactoe/gamestate/GameState.java
-  visible: true
-  learner_created: true
 - name: src/tictactoe/gamestate/GameStateCategory.java
   visible: true
   learner_created: true
@@ -510,25 +507,37 @@ files:
 - name: src/tictactoe/gamestate/GameResultAbstract.java
   visible: true
   learner_created: true
+- name: src/tictactoe/gamestate/GameData.java
+  visible: true
+  learner_created: true
+- name: src/tictactoe/gamestate/IGameData.java
+  visible: true
+  learner_created: true
+- name: src/tictactoe/gamestate/IGameState.java
+  visible: true
+  learner_created: true
+- name: src/tictactoe/gamestate/IGameSetup.java
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/learn/step/5399#comment
 status: Failed
 feedback:
   message: |-
-    Wrong answer in test #3
+    Wrong answer in test #7
 
-    The result is incorrect. Should be: &quot;O wins&quot;, found: &quot;X wins&quot;. Check if your program works correctly in test examples in description.
+    The result is incorrect. Should be: &quot;Impossible&quot;, found: &quot;Game not finished&quot;. Check if your program works correctly in test examples in description.
 
     Please find below the output of your program during this failed test.
     Note that the &#39;&gt;&#39; character indicates the beginning of the input line.
 
     ---
 
-    &gt; XOOOXOXXO
+    &gt; _O_X__X_X
     ---------
-    | X O O |
-    | O X O |
-    | X X O |
+    | _ O _ |
+    | X _ _ |
+    | X _ X |
     ---------
-    X wins
-  time: Tue, 12 Apr 2022 18:31:43 UTC
+    Game not finished
+  time: Tue, 19 Apr 2022 19:54:26 UTC
 record: -1

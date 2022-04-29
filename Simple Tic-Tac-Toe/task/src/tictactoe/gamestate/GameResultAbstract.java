@@ -3,7 +3,7 @@ package tictactoe.gamestate;
 import java.util.ArrayList;
 
 abstract class GameResultAbstract implements IGameResult {
-    public final ArrayList<GameStateError> errors = new ArrayList<>();
+    public final ArrayList<IGameStateError> errors = new ArrayList<>();
     public GameStateCategory category = GameStateCategory.Unknown;
 
     public GameStateCategory getGameStateCategory() {
@@ -24,11 +24,11 @@ abstract class GameResultAbstract implements IGameResult {
         }
     }
 
-    public ArrayList<GameStateError> GetErrors() {
+    public ArrayList<IGameStateError> GetErrors() {
         return errors;
     }
 
-    public void AddError(GameStateError error) {
+    public void AddError(IGameStateError error) {
         if (error != null) {
             this.errors.add(error);
         }

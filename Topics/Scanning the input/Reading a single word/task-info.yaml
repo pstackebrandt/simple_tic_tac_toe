@@ -1,10 +1,10 @@
 type: choice
 is_multiple_choice: false
 options:
-- text: scanner.nextLine()
-- text: scanner.nextString()
 - text: scanner.nextWord()
+- text: scanner.nextLine()
 - text: scanner.next()
+- text: scanner.nextString()
 files:
 - name: src/Task.java
   visible: true

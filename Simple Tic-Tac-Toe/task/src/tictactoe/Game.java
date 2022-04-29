@@ -1,11 +1,12 @@
 package tictactoe;
 
-import tictactoe.gamestate.GameResult;
-import tictactoe.gamestate.GameState;
-import tictactoe.gamestate.GameStateCategory;
-import tictactoe.gamestate.IGameResult;
+import tictactoe.gamestate.*;
 
+import java.util.ArrayList;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import static java.util.Optional.empty;
 
 /**
  * Tic tac toe game.
@@ -18,19 +19,19 @@ public class Game {
 
     final private PlayGround playGround;
 
-    final static char[] ValidStateChars = {'O', 'X', '_'}; // todo decide which const to use
+    // final static char[] ValidStateChars = {'O', 'X', '_'}; // todo decide which const to use
     final static String ValidStateCharsString = "OX_";  // todo decide which const to use, rename
-    private final GameState gameState;
+    private final IGameData gameData;
 
     /**
      * @param gameStateLine Describes the game state. Example: "O_OXXO_XX"
      */
     public Game(String gameStateLine) {
-        this.gameState = new GameState(
+        this.gameData = new GameData(
                 cleanGameStateLine(gameStateLine),
                 getCellsCount());
 
-        this.playGround = new PlayGround(this.gameState.getGameStateSquare());
+        this.playGround = new PlayGround(this.gameData.getGameStateSquare());
     }
 
     /**
@@ -99,9 +100,9 @@ public class Game {
         return true;
     }
 
-    private GameState categorizeGameState(String state, int fieldCount) {
+    private GameData categorizeGameState(String state, int fieldCount) {
 
-        var result = new GameState(state, fieldCount);
+        var result = new GameData(state, fieldCount);
         result.category = GameStateCategory.XWins;
         //result.errors.add(new GameStateError());
 
@@ -131,54 +132,182 @@ public class Game {
     }
 
     public void printGameStateSquare() {
-        System.out.println(this.gameState.getGameStateLine());
+        System.out.println(this.gameData.getGameStateLine());
     }
 
     public void printPlayGround() {
         playGround.printPlayGround();
     }
 
+    /**
+     * Print result of the game, e.g. winner, stalemate, erroneous state
+     */
     public void printGameResult() {
-        IGameResult gameResult = getGameResult(this.gameState);
+        IGameResult gameResult = getGameResult(this.gameData);
 
-        System.out.println("X wins");
-    }
-
-    private IGameResult getGameResult(final GameState gameState) {
-
-        Optional<IGameResult> result;
-        // checkCountOfCells // todo later?
-
-        result = validatePlayerCellsCount();
-        if (result.isPresent()) return result.get();
-
-
-        int xLines = CountPlayerLines(Player.X, gameState.getGameStateLine());
-        int oLines = CountPlayerLines(Player.O, gameState.getGameStateLine());
-        // checkWinValidity
-        // getWinState //x, o, draw, GameNotFinished
-
-        return gameState;
+        // check game results
+        var stateCategory = gameResult.getGameStateCategory();
+        switch (stateCategory) {
+            case XWins:
+                System.out.println("X wins");
+                break;
+            case OWins:
+                System.out.println("O wins");
+                break;
+            case Draw:
+                System.out.println("Draw");
+                break;
+            case NotFinished:
+                System.out.println("Game not finished");
+                break;
+            case Impossible:
+                System.out.println("Impossible");
+                break;
+            case Unknown:
+                System.out.println("Error: Game state shouldn't be Unknown");
+                break;
+            default:
+                System.out.println("Error: Unexpected game state category");
+        }
     }
 
     /**
-     * Checks whether cells of each player have correct count.
+     *  Get result of the game, e.g. Who wins, stalemate, error of current state.
+     * @param gameState
+     * @return
+     */
+    private IGameResult getGameResult(final IGameState gameState) {
+        Optional<IGameResult> result;
+        // checkCountOfCells // todo later?
+
+        // find invalid states of cell count
+        result = invalidatePlayerCellsCount(); // todo seems to be buggy for _O_X__X_X
+        if (result.isPresent()) return result.get();
+
+        // Check win state of game
+        result = getWinState(gameState); //x, o, draw, GameNotFinished, erroneous state
+        if (result.isPresent()) return result.get();
+
+        return new GameResult(GameStateCategory.Unknown); // is error
+    }
+
+    /**
+     * Return information about winner, stalemate, game end without winner, erroneous state.
+     * @param gameState
+     * @return GameResult.
+     */
+    // todo We don't seem to need an Optional. Remove!
+    private Optional<IGameResult> getWinState(IGameState gameState) {
+        var gameStateError = checkPlayerCellsCountDifference(gameState);
+        if (gameStateError.isPresent()) {
+            return Optional.of(new GameResult(GameStateCategory.Impossible,
+                    gameStateError.get()
+            ));
+        }
+
+        // calc winners
+        int xWinsCount = getWinLinesCount(gameState, Player.X);
+        int oWinsCount = getWinLinesCount(gameState, Player.O);
+
+        if (xWinsCount + oWinsCount > 1) {
+            return Optional.of(new GameResult(GameStateCategory.Impossible,
+                    new GameStateError(GameStateErrorType.TooManyWinLines,
+                            "Too many win lines"))
+            );
+        }
+
+        if (xWinsCount == 1) {
+            return Optional.of(new GameResult(GameStateCategory.XWins));
+        }
+
+        if (oWinsCount == 1) {
+            return Optional.of(new GameResult(GameStateCategory.OWins));
+        }
+
+        final var stateLine = gameState.getGameStateLine();
+
+        // calc ongoing game
+        if (!stateLine.contains("_")) {
+            return Optional.of(new GameResult(GameStateCategory.Draw));
+        } else {
+            return Optional.of(new GameResult(GameStateCategory.NotFinished));
+        }
+    }
+
+    /**
+     * Tells how many win lines player got.
+     *
+     * @return Count of win lines.
+     */
+    private int getWinLinesCount(IGameState gameState, Player player) {
+        var linesCount = new AtomicInteger();
+
+        final String cellChar = player.equals(Player.X) ? gameState.getPlayerXStateCharacter()
+                : gameState.getPlayerOStateCharacter();
+
+        final var workLine = gameState.getGameStateLine().replaceAll(cellChar, "#");
+
+        var winPatterns = new ArrayList<String>();
+        winPatterns.add("...###..."); // horizontal lines
+        winPatterns.add("###......");
+        winPatterns.add("......###");
+        winPatterns.add("#..#..#.."); // vertical lines
+        winPatterns.add(".#..#..#.");
+        winPatterns.add("..#..#..#");
+        winPatterns.add("#...#...#"); // diagonal lines
+        winPatterns.add("..#.#.#..");
+
+        winPatterns.forEach(pattern -> {
+            if (workLine.matches(pattern)) {
+                linesCount.set(linesCount.get() + 1);
+            }
+        });
+
+        return linesCount.get();
+    }
+
+    /**
+     * Tell whether cells count of the player is wrong.
+     *
+     * @return empty if no error found
+     */
+    private Optional<IGameStateError> checkPlayerCellsCountDifference(IGameState gameState) {
+        int xCells = CountPlayerCells(Player.X, gameState.getGameStateLine());
+        int oCells = CountPlayerCells(Player.O, gameState.getGameStateLine());
+
+        if (Math.abs(xCells - oCells) > 1) {
+            GameStateError error;
+            if (xCells > oCells) {
+                error = new GameStateError(GameStateErrorType.TOO_MANY_X_CELLS,
+                        "Too many x cells");
+            } else {
+                error = new GameStateError(GameStateErrorType.TOO_MANY_O_CELLS,
+                        "Too many o cells");
+            }
+            return Optional.of(error);
+        }
+
+        return Optional.empty();
+    }
+
+    /**
+     * Checks whether cells of each player have incorrect count.
      *
      * @return Optional.Empty: no error in relation to cells found, GameResult: Cell count is wrong.
      * ({@link GameStateCategory} is additionally set to GameStateCategory.Impossible.)
      */
-    private Optional<IGameResult> validatePlayerCellsCount() {
+    private Optional<IGameResult> invalidatePlayerCellsCount() {
         int playerXCellCount = checkCountOfPlayerCells(Player.X);
         int playerOCellCount = checkCountOfPlayerCells(Player.O);
 
         // Wrong player cells difference
-        if (Math.abs(playerXCellCount - playerOCellCount) > 2) {
+        if (Math.abs(playerXCellCount - playerOCellCount) > 1) {
             return Optional.of(new GameResult(GameStateCategory.Impossible));
         }
-        return Optional.empty();
+        return empty();
     }
 
-    private int CountPlayerLines(Player x, String gameStateLine) {
+    private int CountPlayerCells(Player x, String gameStateLine) {
         //int count = StringUtils.countMatches("elephant", "e");
         return 0;
     }

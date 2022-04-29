@@ -2,28 +2,12 @@ package tictactoe.gamestate;
 
 import tictactoe.Game;
 
-import java.util.ArrayList;
-
-interface IGameState {
-    String getGameStateLine();
-
-    char[][] getGameStateSquare();
-}
-
-interface IGameSetup {
-    int getCellsCount();
-
-    int getPlayGroundRowsCount();
-
-    int getPlayGroundColumnsCount();
-}
-
 /**
  * Holds information about the state of a game.
  */
-public class GameState extends GameResultAbstract implements IGameState, IGameSetup {
+public class GameData extends GameResultAbstract implements IGameData {
 
-    public GameState(String stateLine, int cellsCount) {
+    public GameData(String stateLine, int cellsCount) {
         this.stateLine = stateLine;
         this.cellsCount = cellsCount;
     }
@@ -52,6 +36,19 @@ public class GameState extends GameResultAbstract implements IGameState, IGameSe
 
     public char[][] getGameStateSquare() {
         return Game.getGameStateSquare(this.stateLine, getCellsCount());
+    }
+
+    public String getPlayerXStateCharacter() {
+        return "X";
+    }
+
+    public String getPlayerOStateCharacter() {
+        return "O";
+    }
+
+
+    public String getEmptyCellStateCharacter() {
+        return "_";
     }
 
 }
