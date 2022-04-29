@@ -183,7 +183,7 @@ public class Game {
         // checkCountOfCells // todo later?
 
         // find invalid states of cell count
-        result = invalidatePlayerCellsCount(gameState); // todo seems to be buggy for _O_X__X_X
+        result = invalidatePlayerCellsCount(gameState.getGameStateLine());
         if (result.isPresent()) return result.get();
 
         // Check win state of game
@@ -299,12 +299,12 @@ public class Game {
      * @return Optional.Empty: no error in relation to cells found, GameResult: Cell count is wrong.
      * ({@link GameStateCategory} is additionally set to GameStateCategory.Impossible.)
      */
-    private Optional<IGameResult> invalidatePlayerCellsCount(IGameState state) {
-        int playerXCellCount = checkCountOfPlayerCells(Player.X, state);
-        int playerOCellCount = checkCountOfPlayerCells(Player.O, state);
+    private Optional<IGameResult> invalidatePlayerCellsCount(String stateLine) {
+        int xCellCount = Game.countPlayerCells(Player.X, stateLine);
+        int oCellCount = Game.countPlayerCells(Player.O, stateLine);
 
         // Wrong player cells difference
-        if (Math.abs(playerXCellCount - playerOCellCount) > 1) {
+        if (Math.abs(xCellCount - oCellCount) > 1) {
             return Optional.of(new GameResult(GameStateCategory.Impossible));
         }
         return empty();
@@ -316,9 +316,5 @@ public class Game {
     protected static int countPlayerCells(Player player, String gameStateLine) {
         final var characters = Arrays.stream(gameStateLine.split(""));
         return (int) characters.filter(c -> c.equalsIgnoreCase(player.name())).count();
-    }
-
-    private int checkCountOfPlayerCells(Player player, IGameState state) {
-        return Game.countPlayerCells(player, state.getGameStateLine());
     }
 }
