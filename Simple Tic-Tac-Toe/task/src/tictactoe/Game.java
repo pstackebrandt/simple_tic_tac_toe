@@ -311,18 +311,14 @@ public class Game {
     }
 
     /**
-     * Get count of all cells of player.
+     * Get count of all cells of a player.
      */
-    public int countPlayerCells(Player player, String gameStateLine) {
-        var lineStream = Arrays.stream(gameStateLine.split(""));
-        var playersCells = lineStream.filter(s -> s.equalsIgnoreCase(player.name()));
-        int playersCellsCount = (int) playersCells.count();
-
-        return playersCellsCount;
+    protected static int countPlayerCells(Player player, String gameStateLine) {
+        final var characters = Arrays.stream(gameStateLine.split(""));
+        return (int) characters.filter(c -> c.equalsIgnoreCase(player.name())).count();
     }
 
     private int checkCountOfPlayerCells(Player player, IGameState state) {
-
-        return countPlayerCells(player, state.getGameStateLine());
+        return Game.countPlayerCells(player, state.getGameStateLine());
     }
 }
