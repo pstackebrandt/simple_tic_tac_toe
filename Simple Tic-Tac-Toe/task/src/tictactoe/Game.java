@@ -3,6 +3,7 @@ package tictactoe;
 import tictactoe.gamestate.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -172,7 +173,8 @@ public class Game {
     }
 
     /**
-     *  Get result of the game, e.g. Who wins, stalemate, error of current state.
+     * Get result of the game, e.g. Who wins, stalemate, error of current state.
+     *
      * @param gameState
      * @return
      */
@@ -181,7 +183,7 @@ public class Game {
         // checkCountOfCells // todo later?
 
         // find invalid states of cell count
-        result = invalidatePlayerCellsCount(); // todo seems to be buggy for _O_X__X_X
+        result = invalidatePlayerCellsCount(gameState); // todo seems to be buggy for _O_X__X_X
         if (result.isPresent()) return result.get();
 
         // Check win state of game
@@ -193,6 +195,7 @@ public class Game {
 
     /**
      * Return information about winner, stalemate, game end without winner, erroneous state.
+     *
      * @param gameState
      * @return GameResult.
      */
@@ -272,8 +275,8 @@ public class Game {
      * @return empty if no error found
      */
     private Optional<IGameStateError> checkPlayerCellsCountDifference(IGameState gameState) {
-        int xCells = CountPlayerCells(Player.X, gameState.getGameStateLine());
-        int oCells = CountPlayerCells(Player.O, gameState.getGameStateLine());
+        int xCells = countPlayerCells(Player.X, gameState.getGameStateLine());
+        int oCells = countPlayerCells(Player.O, gameState.getGameStateLine());
 
         if (Math.abs(xCells - oCells) > 1) {
             GameStateError error;
@@ -296,9 +299,9 @@ public class Game {
      * @return Optional.Empty: no error in relation to cells found, GameResult: Cell count is wrong.
      * ({@link GameStateCategory} is additionally set to GameStateCategory.Impossible.)
      */
-    private Optional<IGameResult> invalidatePlayerCellsCount() {
-        int playerXCellCount = checkCountOfPlayerCells(Player.X);
-        int playerOCellCount = checkCountOfPlayerCells(Player.O);
+    private Optional<IGameResult> invalidatePlayerCellsCount(IGameState state) {
+        int playerXCellCount = checkCountOfPlayerCells(Player.X, state);
+        int playerOCellCount = checkCountOfPlayerCells(Player.O, state);
 
         // Wrong player cells difference
         if (Math.abs(playerXCellCount - playerOCellCount) > 1) {
@@ -307,12 +310,19 @@ public class Game {
         return empty();
     }
 
-    private int CountPlayerCells(Player x, String gameStateLine) {
-        //int count = StringUtils.countMatches("elephant", "e");
-        return 0;
+    /**
+     * Get count of all cells of player.
+     */
+    public int countPlayerCells(Player player, String gameStateLine) {
+        var lineStream = Arrays.stream(gameStateLine.split(""));
+        var playersCells = lineStream.filter(s -> s.equalsIgnoreCase(player.name()));
+        int playersCellsCount = (int) playersCells.count();
+
+        return playersCellsCount;
     }
 
-    private int checkCountOfPlayerCells(Player x) {
-        return 0;
+    private int checkCountOfPlayerCells(Player player, IGameState state) {
+
+        return countPlayerCells(player, state.getGameStateLine());
     }
 }
