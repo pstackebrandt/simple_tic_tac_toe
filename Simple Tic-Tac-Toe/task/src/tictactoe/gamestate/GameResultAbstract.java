@@ -11,9 +11,9 @@ abstract class GameResultAbstract implements IGameResult {
     }
 
     /**
-     * Change game state category. This category is like a Zusammenfassung
+     * Change game state category. This category is like a summary
      * of the current game state. Someone who changes this, doesn't change
-     * the state of the game but the Einschätzung of the game state (Spielstand).
+     * the state of the game but the evaluation of the game state.
      *
      * @param category New game state category.
      */

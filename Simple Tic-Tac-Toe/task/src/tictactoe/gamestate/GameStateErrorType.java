@@ -6,9 +6,9 @@ package tictactoe.gamestate;
 public enum GameStateErrorType {
     TOO_MANY_X_CELLS,
     TOO_MANY_O_CELLS,
-    TooManyXWinLines,
+    TooManyXWinLines, // todo unused
     TooManyWinLines,
-    TooManyYWinLines,
-    WrongCellCount,
-    WrongCharacter
+    TooManyYWinLines, // todo unused
+    WrongCellCount, // todo unused
+    WrongCharacter // todo unused
 }

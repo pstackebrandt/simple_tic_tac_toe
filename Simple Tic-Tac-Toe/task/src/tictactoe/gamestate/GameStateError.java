@@ -11,6 +11,4 @@ public class GameStateError implements IGameStateError {
         this.type = type;
         this.errorMessage = errorMessage;
     }
-
-
 }

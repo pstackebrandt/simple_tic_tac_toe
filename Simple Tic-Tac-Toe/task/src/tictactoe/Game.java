@@ -15,13 +15,13 @@ import static java.util.Optional.empty;
  * different playground dimensions.
  */
 public class Game {
-    final int playGroundRows = 3;
-    final int playGroundColumns = 3;
+    private final int playGroundRows = 3;
+    private final int playGroundColumns = 3;
 
     final private PlayGround playGround;
 
     // final static char[] ValidStateChars = {'O', 'X', '_'}; // todo decide which const to use
-    final static String ValidStateCharsString = "OX_";  // todo decide which const to use, rename
+    private final static String ValidStateCharsString = "OX_";  // todo decide which const to use, rename
     private final IGameData gameData;
 
     /**
@@ -39,9 +39,8 @@ public class Game {
      * Manage the game.
      */
     public void run() {
-
+        // to be used later
     }
-
 
     /**
      * Get count of all cells of this game.
@@ -101,6 +100,7 @@ public class Game {
         return true;
     }
 
+    // unused
     private GameData categorizeGameState(String state, int fieldCount) {
 
         var result = new GameData(state, fieldCount);
@@ -174,9 +174,6 @@ public class Game {
 
     /**
      * Get result of the game, e.g. Who wins, stalemate, error of current state.
-     *
-     * @param gameState
-     * @return
      */
     private IGameResult getGameResult(final IGameState gameState) {
         Optional<IGameResult> result;
@@ -195,9 +192,6 @@ public class Game {
 
     /**
      * Return information about winner, stalemate, game end without winner, erroneous state.
-     *
-     * @param gameState
-     * @return GameResult.
      */
     // todo We don't seem to need an Optional. Remove!
     private Optional<IGameResult> getWinState(IGameState gameState) {

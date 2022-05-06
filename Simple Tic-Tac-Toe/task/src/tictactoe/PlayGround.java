@@ -5,24 +5,23 @@ package tictactoe;
  * It can print the play ground.
  */
 public class PlayGround {
-    final char playerXIcon = 'X';
-    final char playerOIcon = 'O';
-    final char emptyFieldIcon = '_';
-    final char horizontalBorderIcon = '-';
-    final char verticalBorderIcon = '|';
-    final char fieldSeparatorIcon = ' ';
-    final char borderSeparatorIcon = fieldSeparatorIcon;
+    private final char playerXIcon = 'X'; // todo unused
+    private final char playerOIcon = 'O'; // todo unused
+    private final char emptyFieldIcon = '_';  // todo unused
+    private final char horizontalBorderIcon = '-';
+    private final char verticalBorderIcon = '|';
+    private final char fieldSeparatorIcon = ' ';
+    private final char borderSeparatorIcon = fieldSeparatorIcon;
 
     /**
      * Count of characters required in each line for border. Includes spaces.
      */
-    final int countOfDecorativeCharsAtVerticalBorders = 4;
+    private final int countOfDecorativeCharsAtVerticalBorders = 4;
 
     private char[][] gameState;
 
     /**
      * Constructor, save game state.
-     * @param gameState
      */
     public PlayGround(char[][] gameState) {
         this.gameState = gameState;
@@ -30,8 +29,8 @@ public class PlayGround {
 
     /**
      * Update game state of play ground.
-     * @param gameState
      */
+    // todo unused
     public void updateGameState(char[][] gameState) {
         this.gameState = gameState;
     }
@@ -45,6 +44,7 @@ public class PlayGround {
 
     /**
      * Get formatted play ground.
+     *
      * @return formatted play ground, includes line separators
      */
     private String getPlayGround() {
