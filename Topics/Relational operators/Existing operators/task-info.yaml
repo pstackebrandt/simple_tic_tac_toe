@@ -1,10 +1,14 @@
 type: choice
-is_multiple_choice: false
+is_multiple_choice: true
 options:
-- text: int
-- text: String
-- text: double
-- text: char
+- text: '&lt;&lt;'
+- text: '!='
+- text: '&gt;&gt;&gt;'
+- text: '&lt;='
+- text: '&gt;'
+- text: ==
+- text: '&lt;&gt;'
+- text: =
 files:
 - name: src/Task.java
   visible: true
@@ -17,6 +21,6 @@ files:
       }
     }
   learner_created: false
-feedback_link: https://hyperskill.org/learn/step/9056#comment
+feedback_link: https://hyperskill.org/learn/step/2053#comment
 status: Solved
 record: -1

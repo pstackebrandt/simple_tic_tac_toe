@@ -23,9 +23,14 @@
       <module name="simple_tic_tac_toe.Topics-Printing_data-The_result_of_a_Tic-Tac-Toe_game.main" target="14" />
       <module name="simple_tic_tac_toe.Topics-Printing_data-Theory.main" target="14" />
       <module name="simple_tic_tac_toe.Topics-Relational_operators-Check_the_given_numbers_are_different.main" target="14" />
+      <module name="simple_tic_tac_toe.Topics-Relational_operators-Check_the_sum.main" target="14" />
       <module name="simple_tic_tac_toe.Topics-Relational_operators-Check_the_value.main" target="14" />
       <module name="simple_tic_tac_toe.Topics-Relational_operators-Check_the_value__1_.main" target="14" />
       <module name="simple_tic_tac_toe.Topics-Relational_operators-Determine_the_result.main" target="14" />
+      <module name="simple_tic_tac_toe.Topics-Relational_operators-Existing_operators.main" target="14" />
+      <module name="simple_tic_tac_toe.Topics-Relational_operators-Job_offer.main" target="14" />
+      <module name="simple_tic_tac_toe.Topics-Relational_operators-Possible_values_of_a_variable.main" target="14" />
+      <module name="simple_tic_tac_toe.Topics-Relational_operators-The_result_is_true.main" target="14" />
       <module name="simple_tic_tac_toe.Topics-Relational_operators-Theory.main" target="14" />
       <module name="simple_tic_tac_toe.Topics-Scanning_the_input-Guest_list_of_a_hotel.main" target="14" />
       <module name="simple_tic_tac_toe.Topics-Scanning_the_input-Hiring_a_chef.main" target="14" />

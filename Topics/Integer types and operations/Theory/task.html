@@ -2,8 +2,8 @@
 <html>
  <head></head>
  <body>
-  <h5 style="text-align: center;" id="basic-information-about-integer-types">Basic information about integer types</h5> 
-  <p>Java provides several types which represent integer numbers including positive, negative and zero. In practice, the most used types are <code class="language-java">int</code> and <code class="language-java">long</code>. The first type can store numbers from a smaller range than the second one, but it is often enough (especially, in this topic). You can perform all arithmetic operations (<code class="language-java">+</code>, <code class="language-java">-</code>, <code class="language-java">*</code>, <code class="language-java">/</code>, <code class="language-java">%</code>) with variables of integer types.</p> 
+  <p>Java provides several types which represent integer numbers including positive, negative, and zero. In practice, the most used types are <strong><code class="language-java">int</code></strong> and <strong><code class="language-java">long</code></strong>. The first type can store numbers from a smaller range than the second one, but it is often enough (especially, in this topic). You can perform all arithmetic operations (<code class="language-java">+</code>, <code class="language-java">-</code>, <code class="language-java">*</code>, <code class="language-java">/</code>, <code class="language-java">%</code>) with variables of integer types.</p> 
+  <h5 id="integer-types-the-basics">Integer types: the basics</h5> 
   <p>Let's look at some examples below.</p> 
   <pre><code class="language-java">int two = 2;
 int ten = 10;
@@ -18,7 +18,7 @@ int minusTwo = -two; // -2</code></pre>
   <p>This code demonstrates how to assign values to int variables as well as how to perform arithmetic operations with them. </p> 
   <p>To improve the readability of your code, the special underscore character <code class="language-java">_</code> can be used to separate groups of digits within a number.</p> 
   <pre><code class="language-java">int million = 1_000_000;</code></pre> 
-  <p>You may also print a value of an <strong>int</strong> variable:</p> 
+  <p>You may also print a value of an <code class="language-java">int</code> variable:</p> 
   <pre><code class="language-java">int number = 100;
 System.out.println(number); // 100</code></pre> 
   <p>All arithmetic operations work with the <code class="language-java">long</code> type as well.</p> 
@@ -32,19 +32,19 @@ System.out.println(result); // 100000000021</code></pre>
   <p></p>
   <div class="alert alert-primary">
    Use 
-   <code class="language-java">long</code> numbers when it is necessary (to process big values). In other situations, prefer 
-   <code class="language-java">int</code> numbers.
+   <code class="language-java">long</code> numbers only if it is really necessary (when you deal with numbers larger than two billion). In other situations, prefer 
+   <code class="language-java">int</code> numbers. 
   </div>
   <p></p> 
-  <h5 style="text-align: center;" id="the-forms-of-the-assignment-operator">The forms of the assignment operator</h5> 
+  <h5 id="the-forms-of-the-assignment-operator">The forms of the assignment operator</h5> 
   <p>Suppose you want to add some value to a variable. You may write something like this:</p> 
   <pre><code class="language-java">int n = 10;
 n = n + 4; // 14</code></pre> 
   <p>The assignment operator <code class="language-java">=</code> has several forms which combine it with an operation to avoid repeating the variable twice:</p> 
   <pre><code class="language-java">int n = 10;
 n += 4; // 14</code></pre> 
-  <p>As you may see, this form looks more concise. There are a few other possible forms such as <code class="language-java">*=</code>, <code class="language-java">/=</code>, <code class="language-java">%=</code>.</p> 
-  <h5 style="text-align: center;" id="reading-numbers-from-the-standard-input">Reading numbers from the standard input</h5> 
+  <p>As you can see, this form looks more concise. There are a few other possible forms such as <code class="language-java">*=</code>, <code class="language-java">/=</code>, <code class="language-java">%=</code>.</p> 
+  <h5 id="reading-numbers-from-the-standard-input">Reading numbers from the standard input</h5> 
   <p>As a rule, to solve a problem you need to read some data from the outside world, process it, and output the result. The following program reads two numbers from the standard input, adds them, and prints the sum.</p> 
   <pre><code class="language-java">import java.util.Scanner;
 
@@ -66,7 +66,8 @@ class Main {
 long b = scanner.nextLong();
 
 long sum = a + b;</code></pre> 
-  <p>No more lines need to be changed in this code.</p> 
-  <p>Now you have enough knowledge to write useful programs that process data. You may use the template above for solving code challenges in this lesson. Try to give meaningful names to variables when solving problems.</p>
+  <p>See? No more lines need to be changed in this code.</p> 
+  <h5 id="conclusion">Conclusion</h5> 
+  <p>In this topic, you learned about using integer types <code class="language-java">int</code> and <code class="language-java">long</code> to perform various arithmetic operations. Now you have enough knowledge to write useful programs that process data. You may use the template above for solving this topic's code challenges. Try to give meaningful names to variables when solving problems.</p>
  </body>
 </html>
