@@ -3,9 +3,44 @@ import java.util.Scanner;
 class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        final var width = scanner.nextInt();
-        final var height = scanner.nextInt();
-        final var expectedPieces = scanner.nextInt();
+        int width = 0;
+        int height = 0;
+        int expectedPieces = 0;
+        boolean expectedResult = false;
+
+//        var test = true;
+        var test = false;
+//        var testNum = 1;
+//        var testNum = 2;
+        var testNum = 3;
+
+        if (test) {
+            if (testNum == 1) {
+                height = 2;
+                expectedPieces = 6;
+                expectedResult = true;
+            }
+
+            // test 2
+            if (testNum == 2) {
+                width = 4;
+                width = 2;
+                height = 10;
+                expectedPieces = 7;
+                expectedResult = false;
+            }
+
+            if (testNum == 3) {
+                width = 7;
+                height = 14;
+                expectedPieces = 21;
+                expectedResult = true;
+            }
+        } else {
+            width = scanner.nextInt();
+            height = scanner.nextInt();
+            expectedPieces = scanner.nextInt();
+        }
 
         boolean dividable = Main.ChocolateBar.dividableIntoBlock(width, height, expectedPieces);
 
