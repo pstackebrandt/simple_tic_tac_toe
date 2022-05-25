@@ -7,6 +7,7 @@ class Main {
         int height = 0;
         int expectedPieces = 0;
         boolean expectedResult = false;
+        var testDescription = "";
 
 //        var test = true;
         var test = false;
@@ -15,26 +16,28 @@ class Main {
         var testNum = 3;
 
         if (test) {
-            if (testNum == 1) {
-                height = 2;
-                expectedPieces = 6;
-                expectedResult = true;
-            }
-
-            // test 2
-            if (testNum == 2) {
-                width = 4;
-                width = 2;
-                height = 10;
-                expectedPieces = 7;
-                expectedResult = false;
-            }
-
-            if (testNum == 3) {
-                width = 7;
-                height = 14;
-                expectedPieces = 21;
-                expectedResult = true;
+            switch (testNum) {
+                case 1:
+                    testDescription = "should return true because block on height";
+                    width = 4;
+                    height = 2;
+                    expectedPieces = 6;
+                    expectedResult = true;
+                    break;
+                case 2:
+                    testDescription = "should return false because pieces between rows";
+                    width = 2;
+                    height = 10;
+                    expectedPieces = 7;
+                    expectedResult = false;
+                    break;
+                case 3:
+                    testDescription = "should return true because block on width";
+                    width = 7;
+                    height = 14;
+                    expectedPieces = 21;
+                    expectedResult = true;
+                    break;
             }
         } else {
             width = scanner.nextInt();
