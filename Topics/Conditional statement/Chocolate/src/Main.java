@@ -9,12 +9,13 @@ class Main {
         boolean expectedResult = false;
         var testDescription = "";
 
-        var test = true;
-//        var test = false;
+//        var test = true;
+        var test = false;
 //        var testNum = 1;
 //        var testNum = 2;
 //        var testNum = 3;
-        var testNum = 4;
+//        var testNum = 4;
+        var testNum = 5;
 
         if (test) {
             switch (testNum) {
@@ -44,6 +45,13 @@ class Main {
                     width = 2;
                     height = 3;
                     expectedPieces = 8;
+                    expectedResult = false;
+                    break;
+                case 5:
+                    testDescription = "Should return false because as much expected pieces as pieces in bar";
+                    width = 2;
+                    height = 3;
+                    expectedPieces = 6;
                     expectedResult = false;
                     break;
             }
@@ -77,6 +85,10 @@ class Main {
          * @param blockSize Count of pieces of the block.
          */
         public static boolean dividableIntoBlock(int width, int height, int blockSize) {
+            if (blockSize > getPiecesCount(width, height)) {
+                return false;
+            }
+
             boolean dividable = dividableIntoBlock(blockSize, width);
             if (!dividable) {
                 //noinspection SuspiciousNameCombination
