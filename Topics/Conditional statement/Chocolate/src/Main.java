@@ -2,18 +2,19 @@ import java.util.Scanner;
 
 class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+
         int width = 0;
         int height = 0;
         int expectedPieces = 0;
         boolean expectedResult = false;
         var testDescription = "";
 
-//        var test = true;
-        var test = false;
+        var test = true;
+//        var test = false;
 //        var testNum = 1;
 //        var testNum = 2;
-        var testNum = 3;
+//        var testNum = 3;
+        var testNum = 4;
 
         if (test) {
             switch (testNum) {
@@ -38,8 +39,16 @@ class Main {
                     expectedPieces = 21;
                     expectedResult = true;
                     break;
+                case 4:
+                    testDescription = "Should return false because more expected pieces than pieces in bar";
+                    width = 2;
+                    height = 3;
+                    expectedPieces = 8;
+                    expectedResult = false;
+                    break;
             }
         } else {
+            Scanner scanner = new Scanner(System.in);
             width = scanner.nextInt();
             height = scanner.nextInt();
             expectedPieces = scanner.nextInt();
@@ -47,6 +56,14 @@ class Main {
 
         boolean dividable = Main.ChocolateBar.dividableIntoBlock(width, height, expectedPieces);
 
+        if (test) {
+            System.out.println(testDescription);
+            System.out.println("width = " + width);
+            System.out.println("height = " + height);
+            System.out.println("expectedPieces = " + expectedPieces);
+            System.out.println("expectedResult = " + expectedResult);
+            System.out.println("result = " + dividable);
+        }
         System.out.println(dividable ? "YES" : "NO");
     }
 
