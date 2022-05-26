@@ -54,6 +54,8 @@
       <module name="simple_tic_tac_toe.Topics-String-Finding_string_expressions.main" target="11" />
       <module name="simple_tic_tac_toe.Topics-String-Replacing_'a'_with_'b'.main" target="11" />
       <module name="simple_tic_tac_toe.Topics-String-Theory.main" target="11" />
+      <module name="simple_tic_tac_toe.Topics-The_for-loop-The_sum_of_integers_from_a_to_b.main" target="11" />
+      <module name="simple_tic_tac_toe.Topics-The_for-loop-Theory.main" target="11" />
       <module name="simple_tic_tac_toe.Topics-The_while_and_do-while_loops-Determine_the_result.main" target="11" />
       <module name="simple_tic_tac_toe.Topics-The_while_and_do-while_loops-Magic_code.main" target="11" />
       <module name="simple_tic_tac_toe.Topics-The_while_and_do-while_loops-The_smallest_value.main" target="11" />
