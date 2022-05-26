@@ -2,7 +2,15 @@ import java.util.Scanner;
 
 class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        // start coding here
+        final var scanner = new Scanner(System.in);
+        var sum = 0;
+
+        while (true) {
+            var summand = scanner.nextInt();
+            if (summand == 0) break;
+            sum += summand;
+        }
+
+        System.out.println(sum);
     }
 }
