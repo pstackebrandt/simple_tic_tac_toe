@@ -54,7 +54,9 @@
       <module name="simple_tic_tac_toe.Topics-String-Finding_string_expressions.main" target="11" />
       <module name="simple_tic_tac_toe.Topics-String-Replacing_'a'_with_'b'.main" target="11" />
       <module name="simple_tic_tac_toe.Topics-String-Theory.main" target="11" />
+      <module name="simple_tic_tac_toe.Topics-The_for-loop-Determine_the_result.main" target="11" />
       <module name="simple_tic_tac_toe.Topics-The_for-loop-From_sum_to_product.main" target="11" />
+      <module name="simple_tic_tac_toe.Topics-The_for-loop-Maximum_element_divisible_by_four.main" target="11" />
       <module name="simple_tic_tac_toe.Topics-The_for-loop-The_count_of_numbers_divisible_by_N.main" target="11" />
       <module name="simple_tic_tac_toe.Topics-The_for-loop-The_sum_of_integers_from_a_to_b.main" target="11" />
       <module name="simple_tic_tac_toe.Topics-The_for-loop-Theory.main" target="11" />
