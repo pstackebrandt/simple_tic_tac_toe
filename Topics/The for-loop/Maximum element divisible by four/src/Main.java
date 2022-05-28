@@ -15,15 +15,19 @@ class Main {
 }
 
 class Checker {
-    public static int getBiggestNumberDividableBy4(Scanner scanner, int numberCount) {
+    public static int getBiggestNumberDividableBy4(Scanner source, int numberCount) {
         int biggestDividableBy4 = 0;
         for (int i = 0; i < numberCount; i++) {
-            int currentNumber = scanner.nextInt();
-            if (currentNumber > biggestDividableBy4
-                    && currentNumber % 4 == 0) {
+            int currentNumber = source.nextInt();
+            if (isFirstNumberBiggerAndDividableBy4(currentNumber, biggestDividableBy4)) {
                 biggestDividableBy4 = currentNumber;
             }
         }
         return biggestDividableBy4;
+    }
+
+    private static boolean isFirstNumberBiggerAndDividableBy4(int firstNumber, int secondNumber) {
+        return firstNumber > secondNumber
+                && firstNumber % 4 == 0;
     }
 }
