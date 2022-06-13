@@ -22,6 +22,9 @@
       <module name="simple_tic_tac_toe.Topics-Integer_types_and_operations-Squirrels_and_nuts.main" target="11" />
       <module name="simple_tic_tac_toe.Topics-Integer_types_and_operations-The_sum_of_digits.main" target="11" />
       <module name="simple_tic_tac_toe.Topics-Integer_types_and_operations-Theory.main" target="11" />
+      <module name="simple_tic_tac_toe.Topics-Iterating_over_arrays-Select_loops.main" target="11" />
+      <module name="simple_tic_tac_toe.Topics-Iterating_over_arrays-Sum_array_elements_greater_than_a_value.main" target="11" />
+      <module name="simple_tic_tac_toe.Topics-Iterating_over_arrays-Theory.main" target="11" />
       <module name="simple_tic_tac_toe.Topics-Printing_data-Digits_from_0_to_9_backwards.main" target="11" />
       <module name="simple_tic_tac_toe.Topics-Printing_data-From_0_to_4.main" target="11" />
       <module name="simple_tic_tac_toe.Topics-Printing_data-Printing_a_magic_letter.main" target="11" />
