@@ -4,7 +4,7 @@ package tictactoe;
  * PlayGround creates a visual representation of the play ground.
  * It can print the play ground.
  */
-public class PlayGround {
+public class PlayGroundPrinter {
     private final char playerXIcon = 'X'; // todo unused
     private final char playerOIcon = 'O'; // todo unused
     private final char emptyFieldIcon = '_';  // todo unused
@@ -23,7 +23,7 @@ public class PlayGround {
     /**
      * Constructor, save game state.
      */
-    public PlayGround(char[][] gameState) {
+    public PlayGroundPrinter(char[][] gameState) {
         this.gameState = gameState;
     }
 

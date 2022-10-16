@@ -18,7 +18,7 @@ public class Game {
     private final int playGroundRows = 3;
     private final int playGroundColumns = 3;
 
-    final private PlayGround playGround;
+    final private PlayGroundPrinter playGroundPrinter;
 
     // final static char[] ValidStateChars = {'O', 'X', '_'}; // todo decide which const to use
     private final static String ValidStateCharsString = "OX_";  // todo decide which const to use, rename
@@ -28,18 +28,24 @@ public class Game {
      * @param gameStateLine Describes the game state. Example: "O_OXXO_XX"
      */
     public Game(String gameStateLine) {
+
+
+
         this.gameData = new GameData(
                 cleanGameStateLine(gameStateLine),
                 getCellsCount());
 
-        this.playGround = new PlayGround(this.gameData.getGameStateSquare());
+        this.playGroundPrinter = new PlayGroundPrinter(this.gameData.getGameStateSquare());
     }
 
     /**
      * Manage the game.
      */
     public void run() {
-        // to be used later
+        // get inital game state
+        // print game state
+        // get first move of player x
+        // print game state
     }
 
     /**
@@ -137,7 +143,7 @@ public class Game {
     }
 
     public void printPlayGround() {
-        playGround.printPlayGround();
+        playGroundPrinter.printPlayGround();
     }
 
     /**

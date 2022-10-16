@@ -13,7 +13,7 @@ public class GameData extends GameResultAbstract implements IGameData {
     }
 
     /**
-     * Describes each cell of the play ground. Contains not formatting.
+     * Describes each cell of the play ground. Contains no formatting.
      */
     private final String stateLine;
     private final int cellsCount;
@@ -50,5 +50,4 @@ public class GameData extends GameResultAbstract implements IGameData {
     public String getEmptyCellStateCharacter() {
         return "_";
     }
-
 }
