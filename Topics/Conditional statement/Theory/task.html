@@ -31,11 +31,12 @@ if (b) { // or !b
 }</code></pre> 
   <p>In this case, if the expression is <code class="language-java">true</code>, then the first code block is executed; otherwise, the second code block is executed, but not both together.</p> 
   <p>In the example below, the program outputs different text depending on the value of <code class="language-java">num</code> (even or odd).</p> 
+  <p> </p> 
   <p></p>
   <div class="alert alert-primary">
    Note: a number is even if it can be divided exactly by 2; otherwise it's odd.
-  </div>
-  <p></p> 
+  </div> 
+  <p> </p> 
   <pre><code class="language-java">int num = ...; // the num is initialized by some value
 
 if (num % 2 == 0) {
@@ -68,15 +69,16 @@ if (dollars &lt; 1000) {
 }</code></pre> 
   <p>This conditional statement has four branches: <code class="language-java">dollars &lt; 1000</code>, <code class="language-java">dollars &lt; 2000</code>, <code class="language-java">dollars &lt; 100_000</code> and <code class="language-java">dollars &gt;= 100_000</code>. For example, if the value of dollars is <code class="language-java">10_000</code>, it prints <code class="language-java">"Buy a server"</code> because <code class="language-java">10_000</code> is more than <code class="language-java">2000</code> , which means that the first and the second conditions are false, and less than <code class="language-java">100_000</code> , which means that the third condition is true.</p> 
   <p>A conditional statement with multiple branches creates a <strong>decision tree</strong>, whose nodes consist of boolean expressions, and each branch is marked with <em>true</em> or <em>false</em>. The <em>true</em>-branch leads to a block of statements to be executed and a <code class="language-java">false</code>-branch leads to the next condition to be checked. The last false-branch means <strong>"</strong><em>in all other cases</em><strong>"</strong>.</p> 
+  <p> </p> 
   <p></p>
   <div class="alert alert-warning">
    When talking about conditions, programmers often use the term "control flow statements". 
    <strong>Control flow</strong> is the order in which various parts of a program are executed. You will probably meet this term in our topics and on other external resources.
-  </div>
-  <p></p> 
+  </div> 
+  <p> </p> 
   <p>The picture below demonstrates such a tree for the example with computers.</p> 
   <p style="text-align: center;"><img alt="" height="466" src="https://ucarecdn.com/3825c12e-3146-425b-9c1c-d3b2ecf2495b/" width="652"></p> 
-  <p style="text-align: center;"><strong>Decision tree for buying a laptop</strong></p> 
+  <p style="text-align: center;"><strong>Decision tree for buying a computer</strong></p> 
   <p><br> This example completes our examination of conditional statements.</p>
  </body>
 </html>
