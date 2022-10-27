@@ -803,20 +803,6 @@ files:
         int getPlayGroundColumnsCount();
     }
   learner_created: true
-- name: src/tictactoe/gamestate/GameStateCategory.java
-  visible: true
-  text: |
-    package tictactoe.gamestate;
-
-    public enum GameStateCategory {
-        XWins,
-        OWins,
-        Draw,
-        NotFinished,
-        Impossible,
-        Unknown
-    }
-  learner_created: true
 - name: src/tictactoe/gamestate/GameStateError.java
   visible: true
   text: |
@@ -1020,6 +1006,26 @@ files:
             return gameState != null ? gameState.length : 0;
         }
     }
+  learner_created: true
+- name: src/tictactoe/gamestate/GameStateSummary.java
+  visible: true
+  text: |
+    package tictactoe.gamestate;
+
+    public enum GameStateCategory {
+        XWins,
+        OWins,
+        Draw,
+        NotFinished,
+        Impossible,
+        Unknown
+    }
+  learner_created: true
+- name: test/tictactoe/AskMoveTest.java
+  visible: true
+  learner_created: true
+- name: test/tictactoe/GameTest.java
+  visible: true
   learner_created: true
 feedback_link: https://hyperskill.org/learn/step/5400#comment
 status: Failed
