@@ -2,50 +2,176 @@ package tictactoe;
 
 import tictactoe.gamestate.*;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static java.util.Optional.empty;
 
 /**
  * Tic tac toe game.
- * Rows and columns will be used dynamically to allow a game with
+ * Rows and columns may later be used dynamically to allow a game with
  * different playground dimensions.
  */
 public class Game {
     private final int playGroundRows = 3;
     private final int playGroundColumns = 3;
+    private final Scanner scanner = new Scanner(System.in);
 
-    final private PlayGroundPrinter playGroundPrinter;
-
-    // final static char[] ValidStateChars = {'O', 'X', '_'}; // todo decide which const to use
-    private final static String ValidStateCharsString = "OX_";  // todo decide which const to use, rename
-    private final IGameData gameData;
+    private final static String ValidStateCharsString = "OX_";
+    private IGameData gameData;
 
     /**
-     * @param gameStateLine Describes the game state. Example: "O_OXXO_XX"
+     * Instantiate Game
      */
-    public Game(String gameStateLine) {
+    public Game() {
+    }
 
-
-
-        this.gameData = new GameData(
-                cleanGameStateLine(gameStateLine),
-                getCellsCount());
-
-        this.playGroundPrinter = new PlayGroundPrinter(this.gameData.getGameStateSquare());
+    private Scanner getScanner() {
+        return this.scanner;
     }
 
     /**
-     * Manage the game.
+     * Manages the game.
      */
     public void run() {
-        // get inital game state
+        System.out.println("Begin run()");
+        // get initial game state
+        //String gameStateLine = cleanGameStateLine(getInitialGameState());
+
+        // init
+        //this.gameData = new GameData(gameStateLine);
+
         // print game state
+        //var printer = new PlayGroundPrinter(this.gameData.getGameStateSquare());
+        //printer.printPlayGround();
+
         // get first move of player x
-        // print game state
+        this.makeMove(Player.X);
+
+        // print changed game state
+        // printer = new PlayGroundPrinter(this.gameData.getGameStateSquare());
+        // printer.printPlayGround();
+        System.out.println("End run()");
+    }
+
+    /**
+     * A player makes a move.
+     *
+     * @param player
+     */
+    private void makeMove(Player player) {
+        Point move = askMove(player);
+
+        // add move data to game data
+        this.gameData.addMove(move.x, move.y);
+    }
+
+    /**
+     * Returns coordinates of a valid move.
+     */
+    protected Point askMove(Player player) {
+        System.out.println("Begin askMove()");
+        int row = 0;
+        int col = 0;
+        boolean isValidMove = false;
+
+        // loop until got correct move
+        do {
+            // set back values
+            row = 0;
+            col = 0;
+
+            // ask user for move
+            System.out.println("Please enter move eg. 1 1");
+            if (scanner.hasNextInt()) {
+                col = scanner.nextInt();
+            } else {
+                System.out.println("You should enter numbers!");
+                continue;
+            }
+
+            if (scanner.hasNextInt()) {
+                row = scanner.nextInt();
+            } else {
+                System.out.println("You should enter numbers!");
+                continue;
+            }
+
+            // check move
+            isValidMove = isCoordinateWithinBounds(new Point(row, col));
+            if (!isValidMove) {
+                System.out.println("Coordinates should be from 1 to 3!");
+                continue;
+            }
+
+            isValidMove = isCellFree(row, col);
+            if (!isValidMove) {
+                System.out.println("This cell is occupied! Choose another one!");
+                continue;
+            }
+        } while (!isValidMove);
+
+        System.out.println("End askMove()");
+        return new Point(row, col);
+    }
+
+    /**
+     * Returns whether move is valid
+     */
+    private boolean isCellFree(int row, int col) {
+        boolean isFree = false;
+        // todo implement
+        isFree = true;
+        return isFree;
+    }
+
+    /**
+     * Returns whether move is valid
+     */
+    protected boolean isCoordinateWithinBounds(Point coordinate) {
+        boolean isWithin = true;
+
+        if (coordinate.x <= 0 ||
+                coordinate.y <= 0 ||
+                coordinate.x > playGroundRows ||
+                coordinate.y > playGroundRows) {
+            isWithin = false;
+        }
+
+        return isWithin;
+    }
+
+    private String getInitialGameState() {
+        // loop until got valid gamestate
+        String gameState = null;
+        int row = 0;
+        int col = 0;
+        var scanner = this.scanner;
+
+        do {
+            // ask user for gamestate
+
+            if (scanner.hasNextInt()) {
+                col = scanner.nextInt();
+            } else {
+                System.out.println("You should enter numbers!");
+            }
+
+            if (scanner.hasNextInt()) {
+                row = scanner.nextInt();
+            } else {
+                System.out.println("You should enter numbers!");
+            }
+
+            // check gamestate
+            // set invalid gamestate back to null
+        } while (gameState == null);
+
+        return gameState;
     }
 
     /**
@@ -106,16 +232,6 @@ public class Game {
         return true;
     }
 
-    // unused
-    private GameData categorizeGameState(String state, int fieldCount) {
-
-        var result = new GameData(state, fieldCount);
-        result.category = GameStateCategory.XWins;
-        //result.errors.add(new GameStateError());
-
-        return result;
-    }
-
     /**
      * Prepare state line for validity check.
      *
@@ -142,10 +258,6 @@ public class Game {
         System.out.println(this.gameData.getGameStateLine());
     }
 
-    public void printPlayGround() {
-        playGroundPrinter.printPlayGround();
-    }
-
     /**
      * Print result of the game, e.g. winner, stalemate, erroneous state
      */
@@ -153,7 +265,7 @@ public class Game {
         IGameResult gameResult = getGameResult(this.gameData);
 
         // check game results
-        var stateCategory = gameResult.getGameStateCategory();
+        var stateCategory = gameResult.getGameStateSummary();
         switch (stateCategory) {
             case XWins:
                 System.out.println("X wins");
@@ -193,7 +305,7 @@ public class Game {
         result = getWinState(gameState); //x, o, draw, GameNotFinished, erroneous state
         if (result.isPresent()) return result.get();
 
-        return new GameResult(GameStateCategory.Unknown); // is error
+        return new GameResult(GameStateSummary.Unknown); // is error
     }
 
     /**
@@ -203,7 +315,7 @@ public class Game {
     private Optional<IGameResult> getWinState(IGameState gameState) {
         var gameStateError = checkPlayerCellsCountDifference(gameState);
         if (gameStateError.isPresent()) {
-            return Optional.of(new GameResult(GameStateCategory.Impossible,
+            return Optional.of(new GameResult(GameStateSummary.Impossible,
                     gameStateError.get()
             ));
         }
@@ -213,27 +325,27 @@ public class Game {
         int oWinsCount = getWinLinesCount(gameState, Player.O);
 
         if (xWinsCount + oWinsCount > 1) {
-            return Optional.of(new GameResult(GameStateCategory.Impossible,
+            return Optional.of(new GameResult(GameStateSummary.Impossible,
                     new GameStateError(GameStateErrorType.TooManyWinLines,
                             "Too many win lines"))
             );
         }
 
         if (xWinsCount == 1) {
-            return Optional.of(new GameResult(GameStateCategory.XWins));
+            return Optional.of(new GameResult(GameStateSummary.XWins));
         }
 
         if (oWinsCount == 1) {
-            return Optional.of(new GameResult(GameStateCategory.OWins));
+            return Optional.of(new GameResult(GameStateSummary.OWins));
         }
 
         final var stateLine = gameState.getGameStateLine();
 
         // calc ongoing game
         if (!stateLine.contains("_")) {
-            return Optional.of(new GameResult(GameStateCategory.Draw));
+            return Optional.of(new GameResult(GameStateSummary.Draw));
         } else {
-            return Optional.of(new GameResult(GameStateCategory.NotFinished));
+            return Optional.of(new GameResult(GameStateSummary.NotFinished));
         }
     }
 
@@ -297,7 +409,7 @@ public class Game {
      * Checks whether cells of each player have incorrect count.
      *
      * @return Optional.Empty: no error in relation to cells found, GameResult: Cell count is wrong.
-     * ({@link GameStateCategory} is additionally set to GameStateCategory.Impossible.)
+     * ({@link GameStateSummary} is additionally set to GameStateCategory.Impossible.)
      */
     private Optional<IGameResult> invalidatePlayerCellsCount(String stateLine) {
         int xCellCount = Game.countPlayerCells(Player.X, stateLine);
@@ -305,7 +417,7 @@ public class Game {
 
         // Wrong player cells difference
         if (Math.abs(xCellCount - oCellCount) > 1) {
-            return Optional.of(new GameResult(GameStateCategory.Impossible));
+            return Optional.of(new GameResult(GameStateSummary.Impossible));
         }
         return empty();
     }

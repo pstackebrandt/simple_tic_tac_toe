@@ -3,12 +3,12 @@ package tictactoe.gamestate;
 import java.util.ArrayList;
 
 /**
- * Describes result of a game.
+ * Describes the current or final result of a game.
  */
 public interface IGameResult {
-    GameStateCategory getGameStateCategory();
+    GameStateSummary getGameStateSummary();
 
-    void SetGameStateCategory(GameStateCategory category);
+    void SetGameStateSummary(GameStateSummary gameStateSummary);
 
     ArrayList<IGameStateError> GetErrors();
 

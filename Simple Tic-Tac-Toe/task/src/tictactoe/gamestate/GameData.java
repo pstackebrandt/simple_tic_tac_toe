@@ -7,19 +7,17 @@ import tictactoe.Game;
  */
 public class GameData extends GameResultAbstract implements IGameData {
 
-    public GameData(String stateLine, int cellsCount) {
+    public GameData(String stateLine) {
         this.stateLine = stateLine;
-        this.cellsCount = cellsCount;
     }
 
     /**
      * Describes each cell of the play ground. Contains no formatting.
      */
     private final String stateLine;
-    private final int cellsCount;
 
     public int getCellsCount() {
-        return cellsCount;
+        return stateLine.length();
     }
 
     public int getPlayGroundRowsCount() {
@@ -49,5 +47,17 @@ public class GameData extends GameResultAbstract implements IGameData {
 
     public String getEmptyCellStateCharacter() {
         return "_";
+    }
+
+    /**
+     * Add a valid move.
+     * Throws an error if the move isn't valid.
+     *
+     * @param row
+     * @param col
+     */
+    @Override
+    public void addMove(int row, int col) {
+
     }
 }
