@@ -24,7 +24,19 @@ public class GameTest extends TestCase {
         }
     }
 
-    public void testName() {
+    public static class IsCellFreeTest extends TestCase {
+        public void testShouldValidateFreeCell() {
+            var actual = new Game().isCellFree(3, 2, "XO____X_O");
+            assertTrue(actual);
+        }
+
+        public void testShouldInvalidateUsedCell() {
+            var actual = new Game().isCellFree(3, 2, "XO____XOO");
+            assertFalse(false);
+        }
+    }
+
+        public void testName() {
 
     }
 }

@@ -108,7 +108,7 @@ public class Game {
                 continue;
             }
 
-            isValidMove = isCellFree(row, col);
+            isValidMove = isCellFree(row, col, this.gameData.getGameStateLine());
             if (!isValidMove) {
                 System.out.println("This cell is occupied! Choose another one!");
                 continue;
@@ -120,13 +120,18 @@ public class Game {
     }
 
     /**
-     * Returns whether move is valid
+     * Returns whether cell is free.
+     * Doesn't check currently whether position is out of bounds.
+     * @param row first row has number 1
+     * @param col first col has number 1
      */
-    private boolean isCellFree(int row, int col) {
-        boolean isFree = false;
-        // todo implement
-        isFree = true;
-        return isFree;
+    protected boolean isCellFree(int row, int col, String gameStateLine) {
+        row--; // first row or colum should have number 0
+        col--;
+
+        final int position = row * playGroundRows + col;
+
+        return gameStateLine.charAt(position) == '_';
     }
 
     /**
