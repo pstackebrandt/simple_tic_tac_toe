@@ -30,6 +30,15 @@ public class Game {
     public Game() {
     }
 
+    /**
+     * For Test only. Instantiate Game with prepared GameData.
+     *
+     * @param gameData prepared GameData
+     */
+    public Game(GameData gameData) {
+        this.gameData = gameData;
+    }
+
     private Scanner getScanner() {
         return this.scanner;
     }
@@ -37,13 +46,18 @@ public class Game {
     /**
      * Manages the game.
      */
-    public void run() {
+    public void run(String mode) {
         System.out.println("Begin run()");
-        // get initial game state
-        //String gameStateLine = cleanGameStateLine(getInitialGameState());
 
-        // init
-        //this.gameData = new GameData(gameStateLine);
+        // get initial game state
+        String gameStateLine;
+        if (mode == "test") {
+            gameStateLine = "_________";
+        } else {
+            gameStateLine = cleanGameStateLine(getInitialGameState());
+        }
+
+        this.gameData = new GameData(gameStateLine);
 
         // print game state
         //var printer = new PlayGroundPrinter(this.gameData.getGameStateSquare());
@@ -64,7 +78,7 @@ public class Game {
      * @param player
      */
     private void makeMove(Player player) {
-        Point move = askMove(player);
+        Point move = askMove(player, scanner);
 
         // add move data to game data
         this.gameData.addMove(move.x, move.y);
@@ -73,7 +87,7 @@ public class Game {
     /**
      * Returns coordinates of a valid move.
      */
-    protected Point askMove(Player player) {
+    protected Point askMove(Player player, Scanner scanner) {
         System.out.println("Begin askMove()");
         int row = 0;
         int col = 0;
@@ -86,18 +100,21 @@ public class Game {
             col = 0;
 
             // ask user for move
-            System.out.println("Please enter move eg. 1 1");
-            if (scanner.hasNextInt()) {
-                col = scanner.nextInt();
+            System.out.println("Please enter move eg. 1 1 (column row)");
+
+            Integer number = getNumberFromConsole(scanner);
+
+            if (number != null) {
+                col = number;
             } else {
-                System.out.println("You should enter numbers!");
                 continue;
             }
 
-            if (scanner.hasNextInt()) {
-                row = scanner.nextInt();
+            number = getNumberFromConsole(scanner);
+
+            if (number != null) {
+                row = number;
             } else {
-                System.out.println("You should enter numbers!");
                 continue;
             }
 
@@ -119,9 +136,22 @@ public class Game {
         return new Point(row, col);
     }
 
+    protected Integer getNumberFromConsole(Scanner scanner) {
+        int number;
+        if (scanner.hasNextInt()) {
+            number = scanner.nextInt();
+        } else {
+            System.out.println("You should enter numbers!");
+            scanner.nextLine();
+            return null;
+        }
+        return number;
+    }
+
     /**
      * Returns whether cell is free.
      * Doesn't check currently whether position is out of bounds.
+     *
      * @param row first row has number 1
      * @param col first col has number 1
      */
