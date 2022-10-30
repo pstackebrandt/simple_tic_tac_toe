@@ -64,4 +64,16 @@ public class GameTest extends TestCase {
             assertNull("Should return null because input was string instead of number.", actual);
         }
     }
+
+    public static class IsGameStateLineLengthValidTest extends TestCase {
+        public void testShouldValidateGameStateWithCorrectLength() {
+            final var actual = new Game().isGameStateLineLengthValid("_________");
+            assertTrue("Should return true because length of game state is ok.", actual);
+        }
+
+        public void testShouldInvalidateGameStateWhichIsTooShort() {
+            final var actual = new Game().isGameStateLineLengthValid("________"); // 8 chars
+            assertFalse("Should return false because game state is too short.", actual);
+        }
+    }
 }

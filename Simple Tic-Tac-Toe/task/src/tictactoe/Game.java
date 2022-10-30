@@ -54,20 +54,20 @@ public class Game {
         if (mode == "test") {
             gameStateLine = "_________";
         } else {
-            gameStateLine = cleanGameStateLine(getInitialGameState());
+            gameStateLine = cleanGameStateLine(getInitialGameState(scanner, mode));
         }
 
         this.gameData = new GameData(gameStateLine);
 
         // print game state
-        //var printer = new PlayGroundPrinter(this.gameData.getGameStateSquare());
-        //printer.printPlayGround();
+        var printer = new PlayGroundPrinter(this.gameData.getGameStateSquare());
+        printer.printPlayGround();
 
         // get first move of player x
         this.makeMove(Player.X);
 
         // print changed game state
-        // printer = new PlayGroundPrinter(this.gameData.getGameStateSquare());
+        printer = new PlayGroundPrinter(this.gameData.getGameStateSquare());
         // printer.printPlayGround();
         System.out.println("End run()");
     }
@@ -180,37 +180,51 @@ public class Game {
         return isWithin;
     }
 
-    private String getInitialGameState() {
-        // loop until got valid gamestate
+    protected String getInitialGameState(Scanner scanner, String mode) {
+        // loop until got valid game state
         String gameState = null;
-        int row = 0;
-        int col = 0;
-        var scanner = this.scanner;
+        boolean gameStateIsValid = false;
+        System.out.println("Please enter an initial game state like ___XOO___");
 
         do {
-            // ask user for gamestate
-
-            if (scanner.hasNextInt()) {
-                col = scanner.nextInt();
+            // ask user for game state
+            if (scanner.hasNext()) {
+                gameState = scanner.nextLine();
             } else {
-                System.out.println("You should enter numbers!");
+                gameState = "_________";
             }
 
-            if (scanner.hasNextInt()) {
-                row = scanner.nextInt();
-            } else {
-                System.out.println("You should enter numbers!");
-            }
+            // optimize input
+            gameState = cleanGameStateLine(gameState);
 
-            // check gamestate
+            // check game state
+            //    must contain 9 chars
+            gameStateIsValid = isGameStateLineLengthValid(gameState);
+
+            //    must contain only valid chars
+            gameStateIsValid = isGameStateConsistsOfValidChars(gameState);
             // set invalid gamestate back to null
+            if (!gameStateIsValid) {
+                gameState = null;
+            }
         } while (gameState == null);
 
         return gameState;
     }
 
+    private boolean isGameStateConsistsOfValidChars(String gameState) {
+        // TODO
+        return true;
+    }
+
+    /** Returns whether game state has correct number of characters.*/
+    protected boolean isGameStateLineLengthValid(String gameState) {
+        return gameState.length() == getCellsCount();
+    }
+
     /**
-     * Get count of all cells of this game.
+     * Get count of all cells of this game. Calculates the value from
+     * expected rows and columns.
      *
      * @return cells count
      */
