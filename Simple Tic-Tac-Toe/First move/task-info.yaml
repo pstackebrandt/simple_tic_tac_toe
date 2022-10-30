@@ -1021,9 +1021,6 @@ files:
         Unknown
     }
   learner_created: true
-- name: test/tictactoe/AskMoveTest.java
-  visible: true
-  learner_created: true
 - name: test/tictactoe/GameTest.java
   visible: true
   learner_created: true
