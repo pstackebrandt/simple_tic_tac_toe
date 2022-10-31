@@ -51,7 +51,7 @@ public class Game {
 
         // get initial game state
         String gameStateLine;
-        if (mode == "test") {
+        if (mode.equals("test")) {
             gameStateLine = "_________";
         } else {
             gameStateLine = cleanGameStateLine(getInitialGameState(scanner, mode));
@@ -75,7 +75,7 @@ public class Game {
     /**
      * A player makes a move.
      *
-     * @param player
+     * @param player of this move.
      */
     private void makeMove(Player player) {
         Point move = askMove(player, scanner);
@@ -89,8 +89,8 @@ public class Game {
      */
     protected Point askMove(Player player, Scanner scanner) {
         System.out.println("Begin askMove()");
-        int row = 0;
-        int col = 0;
+        int row;
+        int col;
         boolean isValidMove = false;
 
         // loop until got correct move
@@ -128,7 +128,6 @@ public class Game {
             isValidMove = isCellFree(row, col, this.gameData.getGameStateLine());
             if (!isValidMove) {
                 System.out.println("This cell is occupied! Choose another one!");
-                continue;
             }
         } while (!isValidMove);
 
@@ -182,8 +181,8 @@ public class Game {
 
     protected String getInitialGameState(Scanner scanner, String mode) {
         // loop until got valid game state
-        String gameState = null;
-        boolean gameStateIsValid = false;
+        String gameState;
+        boolean gameStateIsValid;
         System.out.println("Please enter an initial game state like ___XOO___");
 
         do {
@@ -200,11 +199,16 @@ public class Game {
             // check game state
             //    must contain 9 chars
             gameStateIsValid = isGameStateLineLengthValid(gameState);
+            if (!gameStateIsValid) {
+                System.out.println("Please enter game state with " + getCellsCount() + " characters!");
+                gameState = null;
+                continue;
+            }
 
             //    must contain only valid chars
             gameStateIsValid = isGameStateConsistsOfValidChars(gameState);
-            // set invalid gamestate back to null
             if (!gameStateIsValid) {
+                System.out.println("Please enter game state which contains characters  " + ValidStateCharsString + " only!");
                 gameState = null;
             }
         } while (gameState == null);
@@ -212,12 +216,23 @@ public class Game {
         return gameState;
     }
 
-    private boolean isGameStateConsistsOfValidChars(String gameState) {
-        // TODO
-        return true;
+    protected boolean isGameStateConsistsOfValidChars(String gameState) {
+        int correctChars = 0;
+        for (char currentStateChar : gameState.toCharArray()) {
+            for (char currentAllowedChar : ValidStateCharsString.toCharArray()) {
+                if (currentStateChar == currentAllowedChar){
+                    correctChars++;
+                }
+            }
+        }
+        // Surely better
+
+        return correctChars == getCellsCount();
     }
 
-    /** Returns whether game state has correct number of characters.*/
+    /**
+     * Returns whether game state has correct number of characters.
+     */
     protected boolean isGameStateLineLengthValid(String gameState) {
         return gameState.length() == getCellsCount();
     }
