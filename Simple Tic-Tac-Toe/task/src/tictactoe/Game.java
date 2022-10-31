@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static java.util.Optional.empty;
 
 /**
- * Tic tac toe game.
+ * Tic-tac-toe game.
  * Rows and columns may later be used dynamically to allow a game with
  * different playground dimensions.
  */
@@ -265,9 +265,7 @@ public class Game {
         var stateChars = state.toCharArray();
 
         for (int row = 0; row < 3; row++) {
-            for (int col = 0; col < 3; col++) {
-                resultState[row][col] = stateChars[row * 3 + col];
-            }
+            System.arraycopy(stateChars, row * 3, resultState[row], 0, 3);
         }
 
         return resultState;
@@ -331,26 +329,13 @@ public class Game {
         // check game results
         var stateCategory = gameResult.getGameStateSummary();
         switch (stateCategory) {
-            case XWins:
-                System.out.println("X wins");
-                break;
-            case OWins:
-                System.out.println("O wins");
-                break;
-            case Draw:
-                System.out.println("Draw");
-                break;
-            case NotFinished:
-                System.out.println("Game not finished");
-                break;
-            case Impossible:
-                System.out.println("Impossible");
-                break;
-            case Unknown:
-                System.out.println("Error: Game state shouldn't be Unknown");
-                break;
-            default:
-                System.out.println("Error: Unexpected game state category");
+            case XWins -> System.out.println("X wins");
+            case OWins -> System.out.println("O wins");
+            case Draw -> System.out.println("Draw");
+            case NotFinished -> System.out.println("Game not finished");
+            case Impossible -> System.out.println("Impossible");
+            case Unknown -> System.out.println("Error: Game state shouldn't be Unknown");
+            default -> System.out.println("Error: Unexpected game state category");
         }
     }
 
