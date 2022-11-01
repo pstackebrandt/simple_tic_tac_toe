@@ -14,15 +14,16 @@ public interface IGameState {
     /**
      * Get the character which marks cells of player X in a game state.
      */
-    String getPlayerXStateCharacter();
+    char getPlayerXStateCharacter();
 
     /**
      * Get the character which marks cells of player O (Letter) in a game state.
      */
-    String getPlayerOStateCharacter();
+    char getPlayerOStateCharacter();
+
 
     /**
      * Get the character which marks empty cells in a game state.
      */
-    String getEmptyCellStateCharacter();
+    char getEmptyCellStateCharacter();
 }

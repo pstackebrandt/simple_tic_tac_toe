@@ -5,8 +5,8 @@ public class Main {
         System.out.println("Start");
         var game = new Game();
         System.out.println("Game initialized");
-//        game.run("");
-        game.run("test");
+        game.run("");
+//        game.run("test");
         System.out.println("Start");
     }
 }

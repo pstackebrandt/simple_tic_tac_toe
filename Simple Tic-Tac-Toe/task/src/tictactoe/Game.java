@@ -39,22 +39,18 @@ public class Game {
         this.gameData = gameData;
     }
 
-    private Scanner getScanner() {
-        return this.scanner;
-    }
-
     /**
      * Manages the game.
      */
     public void run(String mode) {
-        System.out.println("Begin run()");
+        //System.out.println("Begin run()");
 
         // get initial game state
         String gameStateLine;
         if (mode.equals("test")) {
             gameStateLine = "_________";
         } else {
-            gameStateLine = cleanGameStateLine(getInitialGameState(scanner, mode));
+            gameStateLine = cleanGameStateLine(getInitialGameState(scanner));
         }
 
         this.gameData = new GameData(gameStateLine);
@@ -68,8 +64,8 @@ public class Game {
 
         // print changed game state
         printer = new PlayGroundPrinter(this.gameData.getGameStateSquare());
-        // printer.printPlayGround();
-        System.out.println("End run()");
+        printer.printPlayGround();
+        //System.out.println("End run()");
     }
 
     /**
@@ -81,14 +77,15 @@ public class Game {
         Point move = askMove(player, scanner);
 
         // add move data to game data
-        this.gameData.addMove(move.x, move.y);
+        this.gameData.addMove(move.x, move.y, player);
     }
 
     /**
      * Returns coordinates of a valid move.
+     * Coordinates are 0 based.
      */
     protected Point askMove(Player player, Scanner scanner) {
-        System.out.println("Begin askMove()");
+        //System.out.println("Begin askMove()");
         int row;
         int col;
         boolean isValidMove = false;
@@ -100,12 +97,12 @@ public class Game {
             col = 0;
 
             // ask user for move
-            System.out.println("Please enter move eg. 1 1 (column row)");
+            //System.out.println("Please enter move eg. 1 1 (row column)");
 
             Integer number = getNumberFromConsole(scanner);
 
             if (number != null) {
-                col = number;
+                row = number - 1; // input of user is 1..3, row will be 0..2
             } else {
                 continue;
             }
@@ -113,7 +110,7 @@ public class Game {
             number = getNumberFromConsole(scanner);
 
             if (number != null) {
-                row = number;
+                col = number - 1; // input of user is 1..3, col will be 0..2
             } else {
                 continue;
             }
@@ -131,7 +128,7 @@ public class Game {
             }
         } while (!isValidMove);
 
-        System.out.println("End askMove()");
+        //System.out.println("End askMove()");
         return new Point(row, col);
     }
 
@@ -151,13 +148,10 @@ public class Game {
      * Returns whether cell is free.
      * Doesn't check currently whether position is out of bounds.
      *
-     * @param row first row has number 1
-     * @param col first col has number 1
+     * @param row first row has number 0
+     * @param col first col has number 0
      */
     protected boolean isCellFree(int row, int col, String gameStateLine) {
-        row--; // first row or colum should have number 0
-        col--;
-
         final int position = row * playGroundRows + col;
 
         return gameStateLine.charAt(position) == '_';
@@ -165,32 +159,33 @@ public class Game {
 
     /**
      * Returns whether move is valid
+     * @param coordinate Must be 0 based.
      */
     protected boolean isCoordinateWithinBounds(Point coordinate) {
         boolean isWithin = true;
 
-        if (coordinate.x <= 0 ||
-                coordinate.y <= 0 ||
-                coordinate.x > playGroundRows ||
-                coordinate.y > playGroundRows) {
+        if (coordinate.x < 0 ||
+                coordinate.y < 0 ||
+                coordinate.x >= playGroundRows ||
+                coordinate.y >= playGroundRows) {
             isWithin = false;
         }
 
         return isWithin;
     }
 
-    protected String getInitialGameState(Scanner scanner, String mode) {
+    protected String getInitialGameState(Scanner scanner) {
         // loop until got valid game state
         String gameState;
         boolean gameStateIsValid;
-        System.out.println("Please enter an initial game state like ___XOO___");
+        //System.out.println("Please enter an initial game state like ___XOO___");
 
         do {
             // ask user for game state
             if (scanner.hasNext()) {
                 gameState = scanner.nextLine();
             } else {
-                gameState = "_________";
+                gameState = "_________"; // We will get such case only within tests.
             }
 
             // optimize input
@@ -220,14 +215,13 @@ public class Game {
         int correctChars = 0;
         for (char currentStateChar : gameState.toCharArray()) {
             for (char currentAllowedChar : ValidStateCharsString.toCharArray()) {
-                if (currentStateChar == currentAllowedChar){
+                if (currentStateChar == currentAllowedChar) {
                     correctChars++;
                 }
             }
         }
-        // Surely better
 
-        return correctChars == getCellsCount();
+        return correctChars == gameState.length();
     }
 
     /**
@@ -406,10 +400,10 @@ public class Game {
     private int getWinLinesCount(IGameState gameState, Player player) {
         var linesCount = new AtomicInteger();
 
-        final String cellChar = player.equals(Player.X) ? gameState.getPlayerXStateCharacter()
+        final char cellChar =  player.equals(Player.X) ? gameState.getPlayerXStateCharacter()
                 : gameState.getPlayerOStateCharacter();
 
-        final var workLine = gameState.getGameStateLine().replaceAll(cellChar, "#");
+        final var workLine = gameState.getGameStateLine().replaceAll(String.valueOf(cellChar), "#");
 
         var winPatterns = new ArrayList<String>();
         winPatterns.add("...###..."); // horizontal lines
