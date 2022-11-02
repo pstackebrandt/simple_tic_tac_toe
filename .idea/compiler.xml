@@ -26,6 +26,9 @@
       <module name="simple_tic_tac_toe.Topics-Iterating_over_arrays-Select_loops.main" target="14" />
       <module name="simple_tic_tac_toe.Topics-Iterating_over_arrays-Sum_array_elements_greater_than_a_value.main" target="14" />
       <module name="simple_tic_tac_toe.Topics-Iterating_over_arrays-Theory.main" target="14" />
+      <module name="simple_tic_tac_toe.Topics-Multidimensional_array-Practical_applications.main" target="14" />
+      <module name="simple_tic_tac_toe.Topics-Multidimensional_array-Symmetric_matrix.main" target="14" />
+      <module name="simple_tic_tac_toe.Topics-Multidimensional_array-Theory.main" target="14" />
       <module name="simple_tic_tac_toe.Topics-Printing_data-Digits_from_0_to_9_backwards.main" target="14" />
       <module name="simple_tic_tac_toe.Topics-Printing_data-From_0_to_4.main" target="14" />
       <module name="simple_tic_tac_toe.Topics-Printing_data-Printing_a_magic_letter.main" target="14" />
