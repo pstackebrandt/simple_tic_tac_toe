@@ -18,7 +18,9 @@ class Main {
     }
 
     private static String getAnswer(boolean isSymmetrical) {
-        if (isSymmetrical) return "YES";
+        if (isSymmetrical) {
+            return "YES";
+        }
         return "NO";
     }
 
