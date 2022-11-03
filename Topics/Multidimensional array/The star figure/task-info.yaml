@@ -10,5 +10,27 @@ files:
     }
   learner_created: false
 feedback_link: https://hyperskill.org/learn/step/1929#comment
-status: Unchecked
+status: Failed
+feedback:
+  message: |
+    Failed test #1 of 6. Wrong answer
+
+    This is a sample test from the problem statement!
+
+    Test input:
+    9
+    Correct output:
+    * . . . * . . . *
+    . * . . * . . * .
+    . . * . * . * . .
+    . . . * * * . . .
+    * * * * * * * * *
+    . . . * * * . . .
+    . . * . * . * . .
+    . * . . * . . * .
+    * . . . * . . . *
+
+    Your code output:
+    [[null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null]]
+  time: "Wed, 02 Nov 2022 20:52:47 UTC"
 record: -1
