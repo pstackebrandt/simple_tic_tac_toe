@@ -9,6 +9,9 @@ files:
         }
     }
   learner_created: false
+- name: src/figure/Figure.java
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/learn/step/1929#comment
 status: Failed
 feedback:
@@ -31,6 +34,6 @@ feedback:
     * . . . * . . . *
 
     Your code output:
-    [[null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null]]
-  time: "Wed, 02 Nov 2022 20:52:47 UTC"
+    [[., ., ., ., ., ., ., ., .], [., ., ., ., ., ., ., ., .], [., ., ., ., ., ., ., ., .], [., ., ., ., ., ., ., ., .], [., ., ., ., ., ., ., ., .], [., ., ., ., ., ., ., ., .], [., ., ., ., ., ., ., ., .], [., ., ., ., ., ., ., ., .], [., ., ., ., ., ., ., ., .]]
+  time: "Thu, 03 Nov 2022 11:47:45 UTC"
 record: -1
