@@ -485,6 +485,1060 @@ files:
         }
     }
   learner_created: false
+- name: src/tictactoe/gamestate/GameResult.java
+  visible: true
+  text: |
+    package tictactoe.gamestate;
+
+    /**
+     * Describes result of a game (e.g. winner or no win possible because data error).
+     */
+    public class GameResult extends GameResultAbstract {
+        public GameResult(GameStateSummary category) {
+            this.summary = category;
+        }
+
+        public GameResult(GameStateSummary category, IGameStateError error) {
+            this.summary = category;
+            this.errors.add(error);
+        }
+    }
+  learner_created: true
+- name: src/tictactoe/gamestate/IGameState.java
+  visible: true
+  text: |
+    package tictactoe.gamestate;
+
+    /**
+     * Describes current state of a game. It's a temporary state.
+     * It will be changed or extended at every turn of game.
+     */
+    public interface IGameState {
+        /** Get game state as a single string. example: __o_x___x */
+        String getGameStateLine();
+
+        /** Get game state as an array of arrays.*/
+        char[][] getGameStateSquare();
+
+        /**
+         * Get the character which marks cells of player X in a game state.
+         */
+        char getPlayerXStateCharacter();
+
+        /**
+         * Get the character which marks cells of player O (Letter) in a game state.
+         */
+        char getPlayerOStateCharacter();
+
+
+        /**
+         * Get the character which marks empty cells in a game state.
+         */
+        char getEmptyCellStateCharacter();
+    }
+  learner_created: true
+- name: src/tictactoe/gamestate/GameStateSummary.java
+  visible: true
+  text: |
+    package tictactoe.gamestate;
+
+    /**
+     * Possible states of a game.
+     */
+    public enum GameStateSummary {
+        XWins,
+        OWins,
+        Draw,
+        /** The game goes on. */
+        NotFinished,
+        /** There is something wrong with the state of the game. */
+        Impossible,
+        /** Current state is not known.*/
+        Unknown
+    }
+  learner_created: true
+- name: src/tictactoe/gamestate/IGameResult.java
+  visible: true
+  text: |+
+    package tictactoe.gamestate;
+
+    import java.util.ArrayList;
+
+    /**
+     * Describes the current or final result of a game.
+     */
+    public interface IGameResult {
+        GameStateSummary getGameStateSummary();
+
+        void SetGameStateSummary(GameStateSummary gameStateSummary);
+
+        ArrayList<IGameStateError> GetErrors();
+
+        void AddError(IGameStateError error);
+    }
+
+  learner_created: true
+- name: src/tictactoe/gamestate/IGameStateError.java
+  visible: true
+  text: |
+    package tictactoe.gamestate;
+
+    /**
+     * Makes game state errors available.
+     */
+    public interface IGameStateError {
+
+    }
+  learner_created: true
+- name: src/tictactoe/PlayGroundPrinter.java
+  visible: true
+  text: |
+    package tictactoe;
+
+    /**
+     * PlayGround creates a visual representation of the play ground.
+     * It can print the play ground.
+     */
+    public class PlayGroundPrinter {
+        private final char playerXIcon = 'X'; // todo unused
+        private final char playerOIcon = 'O'; // todo unused
+        private final char emptyFieldIcon = '_';  // todo unused
+        private final char horizontalBorderIcon = '-';
+        private final char verticalBorderIcon = '|';
+        private final char fieldSeparatorIcon = ' ';
+        private final char borderSeparatorIcon = fieldSeparatorIcon;
+
+        /**
+         * Count of characters required in each line for border. Includes spaces.
+         */
+        private final int countOfDecorativeCharsAtVerticalBorders = 4;
+
+        private char[][] gameState;
+
+        /**
+         * Constructor, save game state.
+         */
+        public PlayGroundPrinter(char[][] gameState) {
+            this.gameState = gameState;
+        }
+
+        /**
+         * Update game state of play ground.
+         */
+        // todo unused
+        public void updateGameState(char[][] gameState) {
+            this.gameState = gameState;
+        }
+
+        /**
+         * Print play ground of current state.
+         */
+        public void printPlayGround() {
+            System.out.println(getPlayGround());
+        }
+
+        /**
+         * Get formatted play ground.
+         *
+         * @return formatted play ground, includes line separators
+         */
+        private String getPlayGround() {
+            var result = new StringBuilder();
+
+            result.append(getHorizontalBorderIcon())
+                    .append(System.lineSeparator());
+
+            for (int row = 0; row < getRowsCount(); row++) {
+                result.append("" + verticalBorderIcon + borderSeparatorIcon);
+                for (int col = 0; col < getColsCount(); col++) {
+
+                    // append space as delimiter between field icons
+                    if (col != 0) {
+                        result.append(fieldSeparatorIcon);
+                    }
+
+                    result.append(gameState[row][col]);
+                }
+                result.append("" + borderSeparatorIcon + verticalBorderIcon)
+                        .append(System.lineSeparator());
+            }
+
+            result.append(getHorizontalBorderIcon());
+
+            return result.toString();
+        }
+
+        private String getHorizontalBorderIcon() {
+            return ("" + horizontalBorderIcon).repeat(getHorizontalBorderLength());
+        }
+
+        /**
+         * A game with 3 horizontal fields requires 9 characters incl. decorative chars.
+         * ---------, 4 f: 11
+         */
+        protected int getHorizontalBorderLength() {
+            return countOfDecorativeCharsAtVerticalBorders + 2 * getColsCount() - 1;
+        }
+
+        /**
+         * Count of game columns.
+         */
+        public int getColsCount() {
+            return gameState != null && gameState[0] != null
+                    ? gameState[0].length
+                    : 0;
+        }
+
+        /**
+         * Count of game rows.
+         */
+        public int getRowsCount() {
+            return gameState != null ? gameState.length : 0;
+        }
+    }
+  learner_created: true
+- name: src/tictactoe/Player.java
+  visible: true
+  text: |
+    package tictactoe;
+
+    /**
+     * Possible players
+     */
+    public enum Player {
+        X, O
+    }
+  learner_created: true
+- name: src/tictactoe/gamestate/GameData.java
+  visible: true
+  text: |
+    package tictactoe.gamestate;
+
+    import tictactoe.Game;
+    import tictactoe.Player;
+
+    /**
+     * Holds information about the state of a game.
+     * Row and column start with 0 in this class.
+     */
+    public class GameData extends GameResultAbstract implements IGameData {
+
+        public GameData(String stateLine) {
+            this.stateLine = stateLine;
+        }
+
+        /**
+         * Describes each cell of the play ground. Contains no formatting.
+         */
+        private String stateLine;
+
+        public int getCellsCount() {
+            return stateLine.length();
+        }
+
+        public int getPlayGroundRowsCount() {
+            return 3;
+        }
+
+        public int getPlayGroundColumnsCount() {
+            return 3;
+        }
+
+        public String getGameStateLine() {
+            return stateLine;
+        }
+
+        public char[][] getGameStateSquare() {
+            return Game.getGameStateSquare(this.stateLine, getCellsCount());
+        }
+
+        public char getPlayerXStateCharacter() {
+            return 'X';
+        }
+
+        public char getPlayerOStateCharacter() {
+            return 'O';
+        }
+
+
+        public char getEmptyCellStateCharacter() {
+            return '_';
+        }
+
+        /**
+         * Add a valid move.
+         * Throws an error if the move isn't valid.
+         *
+         * @param row First row has index 0.
+         * @param col First column has index 0.
+         */
+        @Override
+        public void addMove(int row, int col, Player player) {
+            final char playerChar = getPlayerCharacter(player);
+
+            var builder = new StringBuilder(stateLine);
+            builder.setCharAt(row * 3 + col, playerChar);
+
+            stateLine = builder.toString();
+        }
+
+        public char getPlayerCharacter(Player player) {
+            // TODO add test
+            if (player == Player.X) {
+                return getPlayerXStateCharacter();
+            }
+            return getPlayerOStateCharacter();
+        }
+    }
+  learner_created: true
+- name: src/tictactoe/Game.java
+  visible: true
+  text: |
+    package tictactoe;
+
+    import tictactoe.gamestate.*;
+
+    import java.awt.*;
+    import java.util.ArrayList;
+    import java.util.Arrays;
+    import java.util.Optional;
+    import java.util.Scanner;
+    import java.util.concurrent.atomic.AtomicInteger;
+
+    import static java.util.Optional.empty;
+
+    /**
+     * Tic-tac-toe game.
+     * Rows and columns may later be used dynamically to allow a game with
+     * different playground dimensions.
+     */
+    public class Game {
+        private final int playGroundRows = 3;
+        private final int playGroundColumns = 3;
+        private final Scanner scanner = new Scanner(System.in);
+
+        private final static String ValidStateCharsString = "OX_";
+        private IGameData gameData;
+
+        /**
+         * Instantiate Game
+         */
+        public Game() {
+        }
+
+        /**
+         * For Test only. Instantiate Game with prepared GameData.
+         *
+         * @param gameData prepared GameData
+         */
+        public Game(GameData gameData) {
+            this.gameData = gameData;
+        }
+
+        /**
+         * Manages the game.
+         */
+        public void run(String mode) {
+            //System.out.println("Begin run()");
+
+            // get initial game state
+            String gameStateLine;
+            if (mode.equals("test")) {
+                gameStateLine = "_________";
+            } else {
+                gameStateLine = cleanGameStateLine(getInitialGameState(scanner));
+            }
+
+            this.gameData = new GameData(gameStateLine);
+
+            // print game state
+            var printer = new PlayGroundPrinter(this.gameData.getGameStateSquare());
+            printer.printPlayGround();
+
+            // get first move of player x
+            this.makeMove(Player.X);
+
+            // print changed game state
+            printer = new PlayGroundPrinter(this.gameData.getGameStateSquare());
+            printer.printPlayGround();
+            //System.out.println("End run()");
+        }
+
+        /**
+         * A player makes a move.
+         *
+         * @param player of this move.
+         */
+        private void makeMove(Player player) {
+            Point move = askMove(player, scanner);
+
+            // add move data to game data
+            this.gameData.addMove(move.x, move.y, player);
+        }
+
+        /**
+         * Returns coordinates of a valid move.
+         * Coordinates are 0 based.
+         */
+        protected Point askMove(Player player, Scanner scanner) {
+            //System.out.println("Begin askMove()");
+            int row;
+            int col;
+            boolean isValidMove = false;
+
+            // loop until got correct move
+            do {
+                // set back values
+                row = 0;
+                col = 0;
+
+                // ask user for move
+                //System.out.println("Please enter move eg. 1 1 (row column)");
+
+                Integer number = getNumberFromConsole(scanner);
+
+                if (number != null) {
+                    row = number - 1; // input of user is 1..3, row will be 0..2
+                } else {
+                    continue;
+                }
+
+                number = getNumberFromConsole(scanner);
+
+                if (number != null) {
+                    col = number - 1; // input of user is 1..3, col will be 0..2
+                } else {
+                    continue;
+                }
+
+                // check move
+                isValidMove = isCoordinateWithinBounds(new Point(row, col));
+                if (!isValidMove) {
+                    System.out.println("Coordinates should be from 1 to 3!");
+                    continue;
+                }
+
+                isValidMove = isCellFree(row, col, this.gameData.getGameStateLine());
+                if (!isValidMove) {
+                    System.out.println("This cell is occupied! Choose another one!");
+                }
+            } while (!isValidMove);
+
+            //System.out.println("End askMove()");
+            return new Point(row, col);
+        }
+
+        protected Integer getNumberFromConsole(Scanner scanner) {
+            int number;
+            if (scanner.hasNextInt()) {
+                number = scanner.nextInt();
+            } else {
+                System.out.println("You should enter numbers!");
+                scanner.nextLine();
+                return null;
+            }
+            return number;
+        }
+
+        /**
+         * Returns whether cell is free.
+         * Doesn't check currently whether position is out of bounds.
+         *
+         * @param row first row has number 0
+         * @param col first col has number 0
+         */
+        protected boolean isCellFree(int row, int col, String gameStateLine) {
+            final int position = row * playGroundRows + col;
+
+            return gameStateLine.charAt(position) == '_';
+        }
+
+        /**
+         * Returns whether move is valid
+         * @param coordinate Must be 0 based.
+         */
+        protected boolean isCoordinateWithinBounds(Point coordinate) {
+            boolean isWithin = true;
+
+            if (coordinate.x < 0 ||
+                    coordinate.y < 0 ||
+                    coordinate.x >= playGroundRows ||
+                    coordinate.y >= playGroundRows) {
+                isWithin = false;
+            }
+
+            return isWithin;
+        }
+
+        protected String getInitialGameState(Scanner scanner) {
+            // loop until got valid game state
+            String gameState;
+            boolean gameStateIsValid;
+            //System.out.println("Please enter an initial game state like ___XOO___");
+
+            do {
+                // ask user for game state
+                if (scanner.hasNext()) {
+                    gameState = scanner.nextLine();
+                } else {
+                    gameState = "_________"; // We will get such case only within tests.
+                }
+
+                // optimize input
+                gameState = cleanGameStateLine(gameState);
+
+                // check game state
+                //    must contain 9 chars
+                gameStateIsValid = isGameStateLineLengthValid(gameState);
+                if (!gameStateIsValid) {
+                    System.out.println("Please enter game state with " + getCellsCount() + " characters!");
+                    gameState = null;
+                    continue;
+                }
+
+                //    must contain only valid chars
+                gameStateIsValid = isGameStateConsistsOfValidChars(gameState);
+                if (!gameStateIsValid) {
+                    System.out.println("Please enter game state which contains characters  " + ValidStateCharsString + " only!");
+                    gameState = null;
+                }
+            } while (gameState == null);
+
+            return gameState;
+        }
+
+        protected boolean isGameStateConsistsOfValidChars(String gameState) {
+            int correctChars = 0;
+            for (char currentStateChar : gameState.toCharArray()) {
+                for (char currentAllowedChar : ValidStateCharsString.toCharArray()) {
+                    if (currentStateChar == currentAllowedChar) {
+                        correctChars++;
+                    }
+                }
+            }
+
+            return correctChars == gameState.length();
+        }
+
+        /**
+         * Returns whether game state has correct number of characters.
+         */
+        protected boolean isGameStateLineLengthValid(String gameState) {
+            return gameState.length() == getCellsCount();
+        }
+
+        /**
+         * Get count of all cells of this game. Calculates the value from
+         * expected rows and columns.
+         *
+         * @return cells count
+         */
+        private int getCellsCount() {
+            return playGroundRows * playGroundColumns;
+        }
+
+        /**
+         * Get game state as a 2 dimensional representation.
+         *
+         * @param state may be invalid.
+         * @return game state
+         */
+        public static char[][] getGameStateSquare(String state, int fieldCount) {
+            var resultState = new char[3][3];
+
+            boolean stateValid = Game.isStateLineRepresentableAsSquare(state, fieldCount);
+
+            if (!stateValid) {
+                throw new IllegalArgumentException(String.format("Game state '%s' is invalid.", state));
+            }
+
+            var stateChars = state.toCharArray();
+
+            for (int row = 0; row < 3; row++) {
+                System.arraycopy(stateChars, row * 3, resultState[row], 0, 3);
+            }
+
+            return resultState;
+        }
+
+        /**
+         * Returns whether state is valid for the game.
+         * (Currently we don't check whether count of state chars of both players is valid.)
+         *
+         * @param state      to be checked.
+         * @param fieldCount is expected count of fields of the play ground.
+         */
+        protected static boolean isStateLineRepresentableAsSquare(String state, int fieldCount) {
+            if (state == null) return false;
+            if (state.length() != fieldCount) return false;   // must contain 9 valid chars for a 3x3 play field
+
+            // must contain only _, X, O (letter)
+            for (String character : state.split("")) {
+                if (!ValidStateCharsString.contains(character)) {
+                    return false;
+                }
+            }
+
+            // todo ?? check whether count of state chars of both players is valid.
+
+            return true;
+        }
+
+        /**
+         * Prepare state line for validity check.
+         *
+         * @return state which contains supported characters in uppercase only
+         */
+        protected static String cleanGameStateLine(final String stateLine) {
+            return stateLine.trim()
+                    .toUpperCase();
+        }
+
+        public String stateToString(char[][] state) {
+            var result = new StringBuilder();
+
+            for (int row = 0; row < playGroundRows; row++) {
+                for (int col = 0; col < playGroundColumns; col++) {
+                    result.append(state[row][col]);
+                }
+            }
+
+            return result.toString();
+        }
+
+        public void printGameStateSquare() {
+            System.out.println(this.gameData.getGameStateLine());
+        }
+
+        /**
+         * Print result of the game, e.g. winner, stalemate, erroneous state
+         */
+        public void printGameResult() {
+            IGameResult gameResult = getGameResult(this.gameData);
+
+            // check game results
+            var stateCategory = gameResult.getGameStateSummary();
+            switch (stateCategory) {
+                case XWins -> System.out.println("X wins");
+                case OWins -> System.out.println("O wins");
+                case Draw -> System.out.println("Draw");
+                case NotFinished -> System.out.println("Game not finished");
+                case Impossible -> System.out.println("Impossible");
+                case Unknown -> System.out.println("Error: Game state shouldn't be Unknown");
+                default -> System.out.println("Error: Unexpected game state category");
+            }
+        }
+
+        /**
+         * Get result of the game, e.g. Who wins, stalemate, error of current state.
+         */
+        private IGameResult getGameResult(final IGameState gameState) {
+            Optional<IGameResult> result;
+            // checkCountOfCells // todo later?
+
+            // find invalid states of cell count
+            result = invalidatePlayerCellsCount(gameState.getGameStateLine());
+            if (result.isPresent()) return result.get();
+
+            // Check win state of game
+            result = getWinState(gameState); //x, o, draw, GameNotFinished, erroneous state
+            if (result.isPresent()) return result.get();
+
+            return new GameResult(GameStateSummary.Unknown); // is error
+        }
+
+        /**
+         * Return information about winner, stalemate, game end without winner, erroneous state.
+         */
+        // todo We don't seem to need an Optional. Remove!
+        private Optional<IGameResult> getWinState(IGameState gameState) {
+            var gameStateError = checkPlayerCellsCountDifference(gameState);
+            if (gameStateError.isPresent()) {
+                return Optional.of(new GameResult(GameStateSummary.Impossible,
+                        gameStateError.get()
+                ));
+            }
+
+            // calc winners
+            int xWinsCount = getWinLinesCount(gameState, Player.X);
+            int oWinsCount = getWinLinesCount(gameState, Player.O);
+
+            if (xWinsCount + oWinsCount > 1) {
+                return Optional.of(new GameResult(GameStateSummary.Impossible,
+                        new GameStateError(GameStateErrorType.TooManyWinLines,
+                                "Too many win lines"))
+                );
+            }
+
+            if (xWinsCount == 1) {
+                return Optional.of(new GameResult(GameStateSummary.XWins));
+            }
+
+            if (oWinsCount == 1) {
+                return Optional.of(new GameResult(GameStateSummary.OWins));
+            }
+
+            final var stateLine = gameState.getGameStateLine();
+
+            // calc ongoing game
+            if (!stateLine.contains("_")) {
+                return Optional.of(new GameResult(GameStateSummary.Draw));
+            } else {
+                return Optional.of(new GameResult(GameStateSummary.NotFinished));
+            }
+        }
+
+        /**
+         * Tells how many win lines player got.
+         *
+         * @return Count of win lines.
+         */
+        private int getWinLinesCount(IGameState gameState, Player player) {
+            var linesCount = new AtomicInteger();
+
+            final char cellChar =  player.equals(Player.X) ? gameState.getPlayerXStateCharacter()
+                    : gameState.getPlayerOStateCharacter();
+
+            final var workLine = gameState.getGameStateLine().replaceAll(String.valueOf(cellChar), "#");
+
+            var winPatterns = new ArrayList<String>();
+            winPatterns.add("...###..."); // horizontal lines
+            winPatterns.add("###......");
+            winPatterns.add("......###");
+            winPatterns.add("#..#..#.."); // vertical lines
+            winPatterns.add(".#..#..#.");
+            winPatterns.add("..#..#..#");
+            winPatterns.add("#...#...#"); // diagonal lines
+            winPatterns.add("..#.#.#..");
+
+            winPatterns.forEach(pattern -> {
+                if (workLine.matches(pattern)) {
+                    linesCount.set(linesCount.get() + 1);
+                }
+            });
+
+            return linesCount.get();
+        }
+
+        /**
+         * Tell whether cells count of the player is wrong.
+         *
+         * @return empty if no error found
+         */
+        private Optional<IGameStateError> checkPlayerCellsCountDifference(IGameState gameState) {
+            int xCells = countPlayerCells(Player.X, gameState.getGameStateLine());
+            int oCells = countPlayerCells(Player.O, gameState.getGameStateLine());
+
+            if (Math.abs(xCells - oCells) > 1) {
+                GameStateError error;
+                if (xCells > oCells) {
+                    error = new GameStateError(GameStateErrorType.TOO_MANY_X_CELLS,
+                            "Too many x cells");
+                } else {
+                    error = new GameStateError(GameStateErrorType.TOO_MANY_O_CELLS,
+                            "Too many o cells");
+                }
+                return Optional.of(error);
+            }
+
+            return Optional.empty();
+        }
+
+        /**
+         * Checks whether cells of each player have incorrect count.
+         *
+         * @return Optional.Empty: no error in relation to cells found, GameResult: Cell count is wrong.
+         * ({@link GameStateSummary} is additionally set to GameStateCategory.Impossible.)
+         */
+        private Optional<IGameResult> invalidatePlayerCellsCount(String stateLine) {
+            int xCellCount = Game.countPlayerCells(Player.X, stateLine);
+            int oCellCount = Game.countPlayerCells(Player.O, stateLine);
+
+            // Wrong player cells difference
+            if (Math.abs(xCellCount - oCellCount) > 1) {
+                return Optional.of(new GameResult(GameStateSummary.Impossible));
+            }
+            return empty();
+        }
+
+        /**
+         * Get count of all cells of a player.
+         */
+        protected static int countPlayerCells(Player player, String gameStateLine) {
+            final var characters = Arrays.stream(gameStateLine.split(""));
+            return (int) characters.filter(c -> c.equalsIgnoreCase(player.name())).count();
+        }
+    }
+  learner_created: true
+- name: src/tictactoe/gamestate/GameStateErrorType.java
+  visible: true
+  text: |
+    package tictactoe.gamestate;
+
+    /**
+     * Types of errors which can be found in a game state.
+     */
+    public enum GameStateErrorType {
+        TOO_MANY_X_CELLS,
+        TOO_MANY_O_CELLS,
+        TooManyXWinLines, // todo unused
+        TooManyWinLines,
+        TooManyYWinLines, // todo unused
+        WrongCellCount, // todo unused
+        WrongCharacter // todo unused
+    }
+  learner_created: true
+- name: src/tictactoe/gamestate/IGameSetup.java
+  visible: true
+  text: |
+    package tictactoe.gamestate;
+
+    /**
+     * Makes setup data of a game available, especially size of playground.
+     * This data describes a game AND must be available at game start.
+     */
+    public interface IGameSetup {
+        int getCellsCount();
+        int getPlayGroundRowsCount();
+        int getPlayGroundColumnsCount();
+    }
+  learner_created: true
+- name: src/tictactoe/gamestate/GameStateError.java
+  visible: true
+  text: |
+    package tictactoe.gamestate;
+
+    /**
+     * Describes error of a game state.
+     */
+    public class GameStateError implements IGameStateError {
+        private GameStateErrorType type;
+        private String errorMessage;
+
+        public GameStateError(GameStateErrorType type, String errorMessage) {
+            this.type = type;
+            this.errorMessage = errorMessage;
+        }
+    }
+  learner_created: true
+- name: src/tictactoe/gamestate/IGameData.java
+  visible: true
+  text: |
+    package tictactoe.gamestate;
+
+    import tictactoe.Player;
+
+    /**
+     * All data which describes the game.
+     */
+    public interface IGameData extends IGameResult, IGameState, IGameSetup {
+        /** Add a valid move.
+         * Throws an error if the move isn't valid. */
+        void addMove(int row, int col, Player player);
+    }
+  learner_created: true
+- name: src/tictactoe/gamestate/GameResultAbstract.java
+  visible: true
+  text: |
+    package tictactoe.gamestate;
+
+    import java.util.ArrayList;
+
+    abstract class GameResultAbstract implements IGameResult {
+        public final ArrayList<IGameStateError> errors = new ArrayList<>();
+        public GameStateSummary summary = GameStateSummary.Unknown;
+
+        public GameStateSummary getGameStateSummary() {
+            return this.summary;
+        }
+
+        /**
+         * It's a summary
+         * of the current game state. Someone who changes this, doesn't change
+         * the state of the game but the result of the evaluation of the game state.
+         *
+         * @param gameStateSummary New game state category.
+         */
+        // Should we better always get the GameStateCategory on the fly? Without to save it?
+        public void SetGameStateSummary(GameStateSummary gameStateSummary) {
+            if (gameStateSummary != null) {
+                this.summary = gameStateSummary;
+            }
+        }
+
+        public ArrayList<IGameStateError> GetErrors() {
+            return errors;
+        }
+
+        public void AddError(IGameStateError error) {
+            if (error != null) {
+                this.errors.add(error);
+            }
+        }
+    }
+  learner_created: true
+- name: test/tictactoe/GameTest.java
+  visible: true
+  text: |-
+    package tictactoe;
+
+    import junit.framework.TestCase;
+    import tictactoe.gamestate.GameData;
+
+    import java.awt.*;
+    import java.util.Scanner;
+
+    public class GameTest extends TestCase {
+
+        public static class AskMoveTest extends TestCase {
+            public void test_should_accept_correct_values_and_return_point() {
+                final var gameData = new GameData("_________");
+                final var game = new Game(gameData);
+
+                final var scanner = new Scanner("3 2"); // (row col)
+                final var actual = game.askMove(Player.X, scanner);
+                // internally we use order of 'row, column'
+                assertEquals("x (row) should be as expected.", 2, actual.x); // row
+                assertEquals("y (column) should be as expected.", 1, actual.y ); // col
+            }
+        }
+
+        public static class GetInitialGameStateTest extends TestCase {
+            public void test_should_accept_correct_values_and_return_game_state() {
+                final var expected = "__XO_____";
+                final var scanner = new Scanner("__XO_____");
+
+                final var actual = new Game().getInitialGameState(scanner);
+
+                assertEquals(actual, expected); // row
+            }
+
+            public void test_should_reject_line_with_wrong_char_count_and_return_game_state_of_correct_line() {
+                final var expected = "__XO_____";
+                final var scanner = new Scanner("__XO__\n__XO_____"); //first line is wrong, second ok
+
+                final var actual = new Game().getInitialGameState(scanner);
+
+                assertEquals(expected, actual); // row
+            }
+
+            public void test_should_reject_line_with_wrong_chars_and_return_game_state_of_correct_line() {
+                final var expected = "__XO_____";
+                final var scanner = new Scanner("__XO_1___\n__XO_____"); //first line is wrong, second ok
+
+                final var actual = new Game().getInitialGameState(scanner);
+
+                assertEquals(actual, expected); // row
+            }
+        }
+
+        public static class IsCoordinateWithinBoundsTest extends TestCase {
+
+            public void testShouldValidateCorrectPoint() {
+                var actual = new Game().isCoordinateWithinBounds(new Point(1, 2));
+                assertTrue(actual);
+            }
+
+            public void testShouldInvalidateXValueAsTooSmall() {
+                var actual = new Game().isCoordinateWithinBounds(new Point(1, 3));
+                assertFalse(actual);
+            }
+
+            public void testShouldInvalidateYValueAsTooSmall() {
+                var actual = new Game().isCoordinateWithinBounds(new Point(0, -1));
+                assertFalse(actual);
+            }
+        }
+
+        public static class IsCellFreeTest extends TestCase {
+            public void testShouldValidateFreeCell() {
+                var actual = new Game().isCellFree(2, 1, "XO____X_O");
+                assertTrue(actual);
+            }
+
+            public void testShouldTellThatCellIsTaken1() {
+                var actual = new Game().isCellFree(2, 1, "XO____XOO");
+                assertFalse(actual);
+            }
+
+            public void testShouldTellThatCellIsTaken2() {
+                var actual = new Game().isCellFree(2, 1, "_XXOO_OX_");
+                assertFalse(actual);
+            }
+
+        }
+
+        public static class GetNumberFromConsoleTest extends TestCase {
+            public void testShouldExtractNumber() {
+                final var scanner = new Scanner("2 3");
+                final var actual = new Game().getNumberFromConsole(scanner);
+                assertEquals("Should return first number of input.", 2, (int) actual);
+            }
+
+            public void testShouldInvalidateStringInput() {
+                final var scanner = new Scanner("ab cd");
+                final var actual = new Game().getNumberFromConsole(scanner);
+                assertNull("Should return null because input was string instead of number.", actual);
+            }
+        }
+
+        public static class IsGameStateLineLengthValidTest extends TestCase {
+            public void testShouldValidateGameStateWithCorrectLength() {
+                final var actual = new Game().isGameStateLineLengthValid("_________");
+                assertTrue("Should return true because length of game state is ok.", actual);
+            }
+
+            public void testShouldInvalidateGameStateWhichIsTooShort() {
+                final var actual = new Game().isGameStateLineLengthValid("________"); // 8 chars
+                assertFalse("Should return false because game state is too short.", actual);
+            }
+        }
+
+        public static class IsGameStateConsistsOfValidCharsTest extends TestCase {
+            public void testShouldValidateGameStateWithCorrectChars() {
+                final var actual = new Game().isGameStateConsistsOfValidChars("_X__O______");
+                assertTrue("Should return true because all chars allowed.", actual);
+            }
+
+            public void testShouldInvalidateGameStateUnexpectedChars() {
+                final var actual = new Game().isGameStateConsistsOfValidChars("_y__10_XO_");
+                assertFalse("Should return false because game state contains unexpected chars.", actual);
+            }
+        }
+
+        public void testDummyTestForClassWithoutFurtherTests(){
+            assertTrue(true);
+        }
+    }
+  learner_created: false
+- name: test/tictactoe/gamestate/GameDataTest.java
+  visible: true
+  text: |-
+    package tictactoe.gamestate;
+
+    import junit.framework.TestCase;
+    import tictactoe.Player;
+
+    public class GameDataTest extends TestCase {
+
+        public static class AddMoveTest extends TestCase {
+            public void test_should_add_move() {
+                final var gameData = new GameData("_________");
+                final var expected = "X___O____";
+
+                gameData.addMove(0, 0, Player.X);
+                gameData.addMove(1, 1, Player.O);
+                final var actual = gameData.getGameStateLine();                    // internally we use order of 'row, column'
+                System.out.println( "actual: " + actual);
+                assertEquals(expected, actual);
+            }
+        }
+
+        public void testDummyTestForClassWithoutFurtherTests(){
+            assertTrue(true);
+        }
+    }
+  learner_created: false
 feedback_link: https://hyperskill.org/learn/step/5401#comment
 status: Unchecked
 record: -1

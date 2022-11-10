@@ -3,9 +3,6 @@
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_14">
     <output url="file://$MODULE_DIR$/../../../../../Topics/Multidimensional array/The star figure/out/production/classes" />
     <exclude-output />
-    <content url="file://$MODULE_DIR$/../../../../../Topics/Multidimensional array/The star figure/src">
-      <sourceFolder url="file://$MODULE_DIR$/../../../../../Topics/Multidimensional array/The star figure/src" isTestSource="false" />
-    </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>

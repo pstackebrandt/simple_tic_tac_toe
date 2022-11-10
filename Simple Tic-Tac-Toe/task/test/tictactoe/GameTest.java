@@ -83,6 +83,7 @@ public class GameTest extends TestCase {
             var actual = new Game().isCellFree(2, 1, "_XXOO_OX_");
             assertFalse(actual);
         }
+
     }
 
     public static class GetNumberFromConsoleTest extends TestCase {

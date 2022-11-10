@@ -12,28 +12,9 @@ files:
 - name: src/figure/Figure.java
   visible: true
   learner_created: true
+- name: src/helpers/Math.java
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/learn/step/1929#comment
 status: Failed
-feedback:
-  message: |
-    Failed test #1 of 6. Wrong answer
-
-    This is a sample test from the problem statement!
-
-    Test input:
-    9
-    Correct output:
-    * . . . * . . . *
-    . * . . * . . * .
-    . . * . * . * . .
-    . . . * * * . . .
-    * * * * * * * * *
-    . . . * * * . . .
-    . . * . * . * . .
-    . * . . * . . * .
-    * . . . * . . . *
-
-    Your code output:
-    [[., ., ., ., ., ., ., ., .], [., ., ., ., ., ., ., ., .], [., ., ., ., ., ., ., ., .], [., ., ., ., ., ., ., ., .], [., ., ., ., ., ., ., ., .], [., ., ., ., ., ., ., ., .], [., ., ., ., ., ., ., ., .], [., ., ., ., ., ., ., ., .], [., ., ., ., ., ., ., ., .]]
-  time: "Thu, 03 Nov 2022 11:47:45 UTC"
 record: -1
