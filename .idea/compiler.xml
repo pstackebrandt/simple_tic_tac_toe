@@ -26,7 +26,12 @@
       <module name="simple_tic_tac_toe.Topics-Iterating_over_arrays-Select_loops.main" target="14" />
       <module name="simple_tic_tac_toe.Topics-Iterating_over_arrays-Sum_array_elements_greater_than_a_value.main" target="14" />
       <module name="simple_tic_tac_toe.Topics-Iterating_over_arrays-Theory.main" target="14" />
+      <module name="simple_tic_tac_toe.Topics-Multidimensional_array-Create_cube.main" target="14" />
+      <module name="simple_tic_tac_toe.Topics-Multidimensional_array-Fill_the_matrix_by_numbers.main" target="14" />
+      <module name="simple_tic_tac_toe.Topics-Multidimensional_array-Indexing_rules.main" target="14" />
+      <module name="simple_tic_tac_toe.Topics-Multidimensional_array-Multidimensional_array_features.main" target="14" />
       <module name="simple_tic_tac_toe.Topics-Multidimensional_array-Practical_applications.main" target="14" />
+      <module name="simple_tic_tac_toe.Topics-Multidimensional_array-Printing_lengths_of_nested_arrays.main" target="14" />
       <module name="simple_tic_tac_toe.Topics-Multidimensional_array-Symmetric_matrix.main" target="14" />
       <module name="simple_tic_tac_toe.Topics-Multidimensional_array-The_star_figure-src.main" target="14" />
       <module name="simple_tic_tac_toe.Topics-Multidimensional_array-The_star_figure.main" target="14" />
